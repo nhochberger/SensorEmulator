@@ -1,0 +1,68 @@
+2016-06-07 14:06:22,181 INFO (main): Starting application
+2016-06-07 14:07:08,550 INFO (main): Starting application
+2016-06-07 14:35:00,816 INFO (main): Starting application
+2016-06-07 14:36:48,270 INFO (main): Starting application
+2016-06-07 14:42:48,456 INFO (main): Starting application
+2016-06-07 14:42:48,466 FATAL (main): Error while starting application. Shutting down.
+java.lang.NullPointerException
+	at hochberger.utilities.gui.EDTSafeFrame.addWindowListener(EDTSafeFrame.java:240)
+	at view.SensorEmulatorGui.activate(SensorEmulatorGui.java:22)
+	at controller.SensorEmulatorApplication.start(SensorEmulatorApplication.java:35)
+	at controller.SensorEmulatorApplication.main(SensorEmulatorApplication.java:19)
+2016-06-07 14:43:14,588 INFO (main): Starting application
+2016-06-07 14:46:58,925 INFO (main): Starting application
+2016-06-07 14:47:00,829 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-07 14:47:00,830 INFO (Thread-2): Exiting application.
+2016-06-07 15:03:15,779 INFO (main): Starting application
+2016-06-07 15:03:15,781 INFO (main): GUI activated
+2016-06-07 15:03:21,420 INFO (Thread-3): Received shutdown command. Trying to shutdown application.
+2016-06-07 15:03:21,421 INFO (Thread-3): GUI deactivated
+2016-06-07 15:03:21,421 INFO (Thread-3): Exiting application.
+2016-06-07 15:04:41,483 INFO (main): Starting application
+2016-06-07 15:04:41,486 INFO (main): GUI activated
+2016-06-07 15:04:47,651 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-07 15:04:47,652 INFO (Thread-2): GUI deactivated
+2016-06-07 15:04:47,652 INFO (Thread-2): Exiting application.
+2016-06-07 18:53:31,986 INFO (main): Starting application
+2016-06-07 18:53:31,991 INFO (main): GUI activated
+2016-06-07 18:53:38,617 INFO (Thread-4): Received shutdown command. Trying to shutdown application.
+2016-06-07 18:53:38,619 INFO (Thread-4): GUI deactivated
+2016-06-07 18:53:38,619 INFO (Thread-4): Exiting application.
+2016-06-07 18:54:08,476 INFO (main): Starting application
+2016-06-07 18:54:08,480 INFO (main): GUI activated
+2016-06-07 18:54:11,353 INFO (Thread-3): Trying to importC:\Users\Nico\custos.cfg
+2016-06-07 18:54:14,265 INFO (Thread-4): Received shutdown command. Trying to shutdown application.
+2016-06-07 18:54:14,266 INFO (Thread-4): GUI deactivated
+2016-06-07 18:54:14,266 INFO (Thread-4): Exiting application.
+2016-06-07 19:29:24,360 INFO (main): Starting application
+2016-06-07 19:29:24,365 INFO (main): GUI activated
+2016-06-07 19:29:28,112 INFO (Thread-3): Trying to import C:\Users\Nico\custos.cfg
+2016-06-07 19:29:28,122 ERROR (Thread-3): Corrupt file. Dimensions do not fot
+2016-06-07 19:29:31,375 INFO (Thread-4): Received shutdown command. Trying to shutdown application.
+2016-06-07 19:29:31,376 INFO (Thread-4): GUI deactivated
+2016-06-07 19:29:31,376 INFO (Thread-4): Exiting application.
+2016-06-07 19:30:40,228 INFO (main): Starting application
+2016-06-07 19:30:40,232 INFO (main): GUI activated
+2016-06-07 19:30:43,090 INFO (Thread-3): Trying to import C:\Users\Nico\custos.cfg
+2016-06-07 19:30:43,090 INFO (Thread-3): Importing 168 bytes
+2016-06-07 19:30:43,099 ERROR (Thread-3): Corrupt file. Dimensions do not fit.
+2016-06-07 19:30:47,138 INFO (Thread-4): Received shutdown command. Trying to shutdown application.
+2016-06-07 19:30:47,139 INFO (Thread-4): GUI deactivated
+2016-06-07 19:30:47,139 INFO (Thread-4): Exiting application.
+2016-06-07 19:33:35,066 INFO (main): Starting application
+2016-06-07 19:33:35,070 INFO (main): GUI activated
+2016-06-07 19:33:36,424 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-07 19:33:36,425 INFO (Thread-2): GUI deactivated
+2016-06-07 19:33:36,425 INFO (Thread-2): Exiting application.
+2016-06-07 19:33:41,069 INFO (main): Starting application
+2016-06-07 19:33:41,073 INFO (main): GUI activated
+2016-06-07 19:33:45,031 INFO (Thread-3): Received shutdown command. Trying to shutdown application.
+2016-06-07 19:33:45,032 INFO (Thread-3): GUI deactivated
+2016-06-07 19:33:45,032 INFO (Thread-3): Exiting application.
+2016-06-07 19:34:29,117 INFO (main): Starting application
+2016-06-07 19:34:29,121 INFO (main): GUI activated
+2016-06-07 19:34:32,463 INFO (Thread-3): Trying to import C:\Users\Nico\terrain.csv
+2016-06-07 19:34:32,463 INFO (Thread-3): Importing 2960972 bytes
+2016-06-07 19:34:34,515 INFO (Thread-4): Received shutdown command. Trying to shutdown application.
+2016-06-07 19:34:34,517 INFO (Thread-4): GUI deactivated
+2016-06-07 19:34:34,517 INFO (Thread-4): Exiting application.

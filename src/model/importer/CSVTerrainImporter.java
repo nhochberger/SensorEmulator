@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import controller.ImportFailedEvent;
+import controller.ImportFinishedEvent;
 import controller.ImportTerrainEvent;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
@@ -43,8 +45,10 @@ public class CSVTerrainImporter extends SessionBasedObject implements TerrainImp
                 }
             }
             logger().info("Import finished");
+            session().getEventBus().publish(new ImportFinishedEvent(heightMap));
         } catch (final IOException | NumberFormatException e) {
             logger().error("Error while importing File", e);
+            session().getEventBus().publish(new ImportFailedEvent());
         }
     }
 
