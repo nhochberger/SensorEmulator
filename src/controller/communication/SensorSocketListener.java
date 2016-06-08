@@ -43,13 +43,13 @@ public abstract class SensorSocketListener extends SessionBasedObject implements
                                     Closer.close(clientSocket);
                                 }
                             }
-                        });
+                        }, "Port " + SensorSocketListener.this.port + " client thread");
                     } catch (final IOException e) {
                         logger().error("Error with socket communication", e);
                     }
                 }
             }
-        }, "Port " + this.port + " thread");
+        }, "Port " + this.port + " server thread");
     }
 
     @Override
