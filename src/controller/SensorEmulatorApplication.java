@@ -8,12 +8,14 @@ import hochberger.utilities.application.BasicLoggedApplication;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.eventbus.SimpleEventBus;
 import model.importer.CSVTerrainImporter;
+import model.sensors.SimpleRayTracingLidar;
 import view.SensorEmulatorGui;
 
 public class SensorEmulatorApplication extends BasicLoggedApplication {
 
     private final BasicSession session;
     private final SensorEmulatorGui gui;
+    private final SimpleRayTracingLidar lidar;
 
     public static void main(final String[] args) {
         setUpLoggingServices(SensorEmulatorApplication.class);
@@ -31,6 +33,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         super();
         this.session = new BasicSession(applicationProperties, new SimpleEventBus(), getLogger());
         this.gui = new SensorEmulatorGui(this.session);
+        this.lidar = new SimpleRayTracingLidar(this.session);
     }
 
     @Override
@@ -38,12 +41,14 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         super.start();
         this.session.getEventBus().register(new CSVTerrainImporter(this.session), ImportTerrainEvent.class);
         this.session.getEventBus().register(new ApplicationShutdownEventReceiver(this.session, this), ApplicationShutdownEvent.class);
+        this.lidar.start();
         this.gui.activate();
     }
 
     @Override
     public void stop() {
         this.gui.deactivate();
+        this.lidar.stop();
         super.stop();
     }
 }

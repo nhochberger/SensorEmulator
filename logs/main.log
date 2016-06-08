@@ -66,3 +66,215 @@ java.lang.NullPointerException
 2016-06-07 19:34:34,515 INFO (Thread-4): Received shutdown command. Trying to shutdown application.
 2016-06-07 19:34:34,517 INFO (Thread-4): GUI deactivated
 2016-06-07 19:34:34,517 INFO (Thread-4): Exiting application.
+2016-06-08 08:16:41,686 INFO (main): Starting application
+2016-06-08 08:16:41,749 INFO (main): GUI activated
+2016-06-08 08:16:45,324 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:16:45,332 INFO (Thread-2): GUI deactivated
+2016-06-08 08:16:45,332 INFO (Thread-2): Exiting application.
+2016-06-08 08:17:08,196 INFO (main): Starting application
+2016-06-08 08:17:08,201 INFO (main): GUI activated
+2016-06-08 08:17:11,333 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:17:11,334 INFO (Thread-2): GUI deactivated
+2016-06-08 08:17:11,335 INFO (Thread-2): Exiting application.
+2016-06-08 08:17:17,460 INFO (main): Starting application
+2016-06-08 08:17:17,465 INFO (main): GUI activated
+2016-06-08 08:17:21,456 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:17:21,457 INFO (Thread-2): GUI deactivated
+2016-06-08 08:17:21,457 INFO (Thread-2): Exiting application.
+2016-06-08 08:20:59,573 INFO (main): Starting application
+2016-06-08 08:20:59,578 INFO (main): GUI activated
+2016-06-08 08:21:06,715 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:21:06,716 INFO (Thread-2): GUI deactivated
+2016-06-08 08:21:06,716 INFO (Thread-2): Exiting application.
+2016-06-08 08:21:11,617 INFO (main): Starting application
+2016-06-08 08:21:11,621 INFO (main): GUI activated
+2016-06-08 08:21:14,443 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:21:14,444 INFO (Thread-2): GUI deactivated
+2016-06-08 08:21:14,444 INFO (Thread-2): Exiting application.
+2016-06-08 08:21:41,979 INFO (main): Starting application
+2016-06-08 08:21:41,983 INFO (main): GUI activated
+2016-06-08 08:21:49,576 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:21:49,577 INFO (Thread-2): GUI deactivated
+2016-06-08 08:21:49,577 INFO (Thread-2): Exiting application.
+2016-06-08 08:22:03,031 INFO (main): Starting application
+2016-06-08 08:22:03,035 INFO (main): GUI activated
+2016-06-08 08:22:08,756 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:22:08,757 INFO (Thread-2): GUI deactivated
+2016-06-08 08:22:08,757 INFO (Thread-2): Exiting application.
+2016-06-08 08:22:14,109 INFO (main): Starting application
+2016-06-08 08:22:14,114 INFO (main): GUI activated
+2016-06-08 08:22:16,036 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:22:16,037 INFO (Thread-2): GUI deactivated
+2016-06-08 08:22:16,037 INFO (Thread-2): Exiting application.
+2016-06-08 08:22:28,423 INFO (main): Starting application
+2016-06-08 08:22:28,427 INFO (main): GUI activated
+2016-06-08 08:22:38,418 INFO (main): Starting application
+2016-06-08 08:22:38,422 INFO (main): GUI activated
+2016-06-08 08:22:47,687 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:22:47,688 INFO (Thread-2): GUI deactivated
+2016-06-08 08:22:47,688 INFO (Thread-2): Exiting application.
+2016-06-08 08:25:01,618 INFO (main): Starting application
+2016-06-08 08:25:01,623 INFO (main): GUI activated
+2016-06-08 08:25:04,270 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:25:04,271 INFO (Thread-2): GUI deactivated
+2016-06-08 08:25:04,271 INFO (Thread-2): Exiting application.
+2016-06-08 08:25:13,126 INFO (main): Starting application
+2016-06-08 08:25:13,132 INFO (main): GUI activated
+2016-06-08 08:25:15,642 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:25:15,643 INFO (Thread-2): GUI deactivated
+2016-06-08 08:25:15,643 INFO (Thread-2): Exiting application.
+2016-06-08 08:25:24,333 INFO (main): Starting application
+2016-06-08 08:25:24,338 INFO (main): GUI activated
+2016-06-08 08:25:26,096 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:25:26,097 INFO (Thread-2): GUI deactivated
+2016-06-08 08:25:26,097 INFO (Thread-2): Exiting application.
+2016-06-08 08:25:45,689 INFO (main): Starting application
+2016-06-08 08:25:45,693 INFO (main): GUI activated
+2016-06-08 08:27:01,665 INFO (main): Starting application
+2016-06-08 08:27:01,669 INFO (main): GUI activated
+2016-06-08 08:27:03,415 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:27:03,416 INFO (Thread-2): GUI deactivated
+2016-06-08 08:27:03,416 INFO (Thread-2): Exiting application.
+2016-06-08 08:27:07,820 INFO (main): Starting application
+2016-06-08 08:27:07,824 INFO (main): GUI activated
+2016-06-08 08:27:13,733 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:27:13,734 INFO (Thread-2): GUI deactivated
+2016-06-08 08:27:13,734 INFO (Thread-2): Exiting application.
+2016-06-08 08:27:21,725 INFO (main): Starting application
+2016-06-08 08:27:21,729 INFO (main): GUI activated
+2016-06-08 08:27:23,543 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:27:23,544 INFO (Thread-2): GUI deactivated
+2016-06-08 08:27:23,544 INFO (Thread-2): Exiting application.
+2016-06-08 08:27:26,936 INFO (main): Starting application
+2016-06-08 08:27:26,940 INFO (main): GUI activated
+2016-06-08 08:27:28,328 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:27:28,329 INFO (Thread-2): GUI deactivated
+2016-06-08 08:27:28,329 INFO (Thread-2): Exiting application.
+2016-06-08 08:27:38,841 INFO (main): Starting application
+2016-06-08 08:27:38,846 INFO (main): GUI activated
+2016-06-08 08:27:40,692 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:27:40,693 INFO (Thread-2): GUI deactivated
+2016-06-08 08:27:40,693 INFO (Thread-2): Exiting application.
+2016-06-08 08:27:56,423 INFO (main): Starting application
+2016-06-08 08:27:56,427 INFO (main): GUI activated
+2016-06-08 08:28:00,630 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:28:00,631 INFO (Thread-2): GUI deactivated
+2016-06-08 08:28:00,631 INFO (Thread-2): Exiting application.
+2016-06-08 08:28:06,184 INFO (main): Starting application
+2016-06-08 08:28:06,189 INFO (main): GUI activated
+2016-06-08 08:28:09,919 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:28:09,920 INFO (Thread-2): GUI deactivated
+2016-06-08 08:28:09,920 INFO (Thread-2): Exiting application.
+2016-06-08 08:29:10,048 INFO (main): Starting application
+2016-06-08 08:29:10,053 INFO (main): GUI activated
+2016-06-08 08:29:17,197 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:29:17,198 INFO (Thread-2): GUI deactivated
+2016-06-08 08:29:17,198 INFO (Thread-2): Exiting application.
+2016-06-08 08:31:12,313 INFO (main): Starting application
+2016-06-08 08:31:12,317 INFO (main): GUI activated
+2016-06-08 08:31:14,974 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:31:14,975 INFO (Thread-2): GUI deactivated
+2016-06-08 08:31:14,976 INFO (Thread-2): Exiting application.
+2016-06-08 08:32:28,489 INFO (main): Starting application
+2016-06-08 08:32:28,494 INFO (main): GUI activated
+2016-06-08 08:32:33,656 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:32:33,657 INFO (Thread-2): GUI deactivated
+2016-06-08 08:32:33,658 INFO (Thread-2): Exiting application.
+2016-06-08 08:32:45,419 INFO (main): Starting application
+2016-06-08 08:32:45,424 INFO (main): GUI activated
+2016-06-08 08:32:49,101 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:32:49,102 INFO (Thread-2): GUI deactivated
+2016-06-08 08:32:49,102 INFO (Thread-2): Exiting application.
+2016-06-08 08:33:23,445 INFO (main): Starting application
+2016-06-08 08:33:23,450 INFO (main): GUI activated
+2016-06-08 08:33:27,601 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:33:27,602 INFO (Thread-2): GUI deactivated
+2016-06-08 08:33:27,602 INFO (Thread-2): Exiting application.
+2016-06-08 08:36:20,617 INFO (main): Starting application
+2016-06-08 08:36:20,621 INFO (main): GUI activated
+2016-06-08 08:36:27,197 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:36:27,199 INFO (Thread-2): GUI deactivated
+2016-06-08 08:36:27,199 INFO (Thread-2): Exiting application.
+2016-06-08 08:36:36,045 INFO (main): Starting application
+2016-06-08 08:36:36,050 INFO (main): GUI activated
+2016-06-08 08:36:48,096 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:36:48,097 INFO (Thread-2): GUI deactivated
+2016-06-08 08:36:48,097 INFO (Thread-2): Exiting application.
+2016-06-08 08:40:34,769 INFO (main): Starting application
+2016-06-08 08:40:34,773 INFO (main): GUI activated
+2016-06-08 08:40:36,904 INFO (Thread-2): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:40:36,905 INFO (Thread-2): GUI deactivated
+2016-06-08 08:40:36,905 INFO (Thread-2): Exiting application.
+2016-06-08 08:50:18,931 INFO (main): Starting application
+2016-06-08 08:50:18,936 INFO (main): GUI activated
+2016-06-08 08:53:22,767 INFO (Thread-7): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:53:22,768 INFO (Thread-7): GUI deactivated
+2016-06-08 08:53:22,768 INFO (Thread-7): Exiting application.
+2016-06-08 08:56:26,126 INFO (main): Starting application
+2016-06-08 08:56:26,131 INFO (main): GUI activated
+2016-06-08 08:56:34,174 INFO (Thread-19): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:56:34,176 INFO (Thread-19): GUI deactivated
+2016-06-08 08:56:34,176 INFO (Thread-19): Exiting application.
+2016-06-08 08:57:53,100 INFO (main): Starting application
+2016-06-08 08:57:53,106 INFO (main): GUI activated
+2016-06-08 08:57:57,035 INFO (Thread-8): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:57:57,037 INFO (Thread-8): GUI deactivated
+2016-06-08 08:57:57,037 INFO (Thread-8): Exiting application.
+2016-06-08 08:58:12,757 INFO (main): Starting application
+2016-06-08 08:58:12,762 INFO (main): GUI activated
+2016-06-08 08:58:30,109 INFO (Thread-66): Received shutdown command. Trying to shutdown application.
+2016-06-08 08:58:30,110 INFO (Thread-66): GUI deactivated
+2016-06-08 08:58:30,110 INFO (Thread-66): Exiting application.
+2016-06-08 09:06:54,269 INFO (main): Starting application
+2016-06-08 09:06:54,276 INFO (main): GUI activated
+2016-06-08 09:07:01,148 INFO (Thread-13): Received shutdown command. Trying to shutdown application.
+2016-06-08 09:07:01,150 INFO (Thread-13): GUI deactivated
+2016-06-08 09:07:01,150 INFO (Thread-13): Exiting application.
+2016-06-08 09:34:12,246 INFO (main): Starting application
+2016-06-08 09:34:12,253 INFO (main): GUI activated
+2016-06-08 09:34:15,697 INFO (Thread-3): Trying to import C:\Users\Nico\terrain.csv
+2016-06-08 09:34:15,698 INFO (Thread-3): Importing 2960972 bytes
+2016-06-08 09:34:15,946 INFO (Thread-3): Import finished
+2016-06-08 09:34:32,055 INFO (Thread-10): Received shutdown command. Trying to shutdown application.
+2016-06-08 09:34:32,057 INFO (Thread-10): GUI deactivated
+2016-06-08 09:34:32,057 INFO (Thread-10): Exiting application.
+2016-06-08 09:34:36,405 INFO (main): Starting application
+2016-06-08 09:34:36,411 INFO (main): GUI activated
+2016-06-08 09:34:39,196 INFO (Thread-3): Trying to import C:\Users\Nico\terrain.csv
+2016-06-08 09:34:39,196 INFO (Thread-3): Importing 2960972 bytes
+2016-06-08 09:34:39,436 INFO (Thread-3): Import finished
+2016-06-08 09:34:49,682 INFO (Thread-9): Received shutdown command. Trying to shutdown application.
+2016-06-08 09:34:49,683 INFO (Thread-9): GUI deactivated
+2016-06-08 09:34:49,683 INFO (Thread-9): Exiting application.
+2016-06-08 09:36:28,168 INFO (main): Starting application
+2016-06-08 09:36:28,175 INFO (main): GUI activated
+2016-06-08 09:36:31,043 INFO (Thread-3): Trying to import C:\Users\Nico\terrain.csv
+2016-06-08 09:36:31,043 INFO (Thread-3): Importing 2960972 bytes
+2016-06-08 09:36:31,281 INFO (Thread-3): Import finished
+2016-06-08 09:37:42,890 INFO (Thread-10): Received shutdown command. Trying to shutdown application.
+2016-06-08 09:37:42,891 INFO (Thread-10): GUI deactivated
+2016-06-08 09:37:42,891 INFO (Thread-10): Exiting application.
+2016-06-08 09:41:47,733 INFO (main): Starting application
+2016-06-08 09:41:47,739 INFO (main): GUI activated
+2016-06-08 09:41:50,717 INFO (Thread-3): Trying to import C:\Users\Nico\terrain.csv
+2016-06-08 09:41:50,717 INFO (Thread-3): Importing 2960972 bytes
+2016-06-08 09:41:50,964 INFO (Thread-3): Import finished
+2016-06-08 09:42:18,243 INFO (Thread-8): Received shutdown command. Trying to shutdown application.
+2016-06-08 09:42:18,244 INFO (Thread-8): GUI deactivated
+2016-06-08 09:42:18,244 INFO (Thread-8): Exiting application.
+2016-06-08 09:42:56,885 INFO (main): Starting application
+2016-06-08 09:42:56,892 INFO (main): GUI activated
+2016-06-08 09:43:13,985 INFO (Thread-4): Trying to import C:\Users\Nico\terrain.csv
+2016-06-08 09:43:13,985 INFO (Thread-4): Importing 2960972 bytes
+2016-06-08 09:43:14,232 INFO (Thread-4): Import finished
+2016-06-08 09:43:43,620 INFO (Thread-6): Trying to import C:\Users\Nico\flat.csv
+2016-06-08 09:43:43,620 INFO (Thread-6): Importing 1316871 bytes
+2016-06-08 09:43:43,672 INFO (Thread-6): Import finished
+2016-06-08 09:44:17,495 INFO (main): Starting application
+2016-06-08 09:44:17,501 INFO (main): GUI activated
+2016-06-08 09:44:23,323 INFO (Thread-3): Trying to import C:\Users\Nico\flat.csv
+2016-06-08 09:44:23,323 INFO (Thread-3): Importing 1316871 bytes
+2016-06-08 09:44:23,453 INFO (Thread-3): Import finished
+2016-06-08 09:44:52,484 INFO (Thread-6): Received shutdown command. Trying to shutdown application.
+2016-06-08 09:44:52,485 INFO (Thread-6): GUI deactivated
+2016-06-08 09:44:52,485 INFO (Thread-6): Exiting application.
