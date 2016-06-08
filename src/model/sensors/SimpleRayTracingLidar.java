@@ -45,9 +45,6 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
         final double deltaX = Math.abs(position.getX() - x);
         final double deltaY = Math.abs(position.getY() - this.heightMap[x][z]);
         final double deltaZ = Math.abs(position.getZ() - z);
-        System.err.println("delta X: " + deltaX);
-        System.err.println("delta Y: " + deltaY);
-        System.err.println("delta Z: " + deltaZ);
         final double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
         return distance;
     }
