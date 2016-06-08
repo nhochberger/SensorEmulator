@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
-import controller.ImportTerrainEvent;
+import controller.events.ImportTerrainEvent;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.gui.EDTSafeFrame;
 import hochberger.utilities.gui.lookandfeel.SetLookAndFeelTo;

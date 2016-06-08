@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import controller.ImportFailedEvent;
-import controller.ImportFinishedEvent;
-import controller.ImportTerrainEvent;
+import controller.events.ImportFailedEvent;
+import controller.events.ImportFinishedEvent;
+import controller.events.ImportTerrainEvent;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.eventbus.EventReceiver;
