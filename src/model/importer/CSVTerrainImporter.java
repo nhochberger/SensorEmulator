@@ -11,6 +11,7 @@ import controller.events.ImportTerrainEvent;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.eventbus.EventReceiver;
+import model.HeightMap;
 
 public class CSVTerrainImporter extends SessionBasedObject implements TerrainImporter, EventReceiver<ImportTerrainEvent> {
 
@@ -31,7 +32,7 @@ public class CSVTerrainImporter extends SessionBasedObject implements TerrainImp
         try {
             final List<String> lines = Files.readAllLines(file.toPath());
             final int dimension = lines.size();
-            final float[][] heightMap = new float[dimension][dimension];
+            final HeightMap map = new HeightMap(dimension);
             for (int z = 0; z < dimension; z++) {
                 final String line = lines.get(z);
                 final String[] split = line.split(DELIMITER);
@@ -41,11 +42,11 @@ public class CSVTerrainImporter extends SessionBasedObject implements TerrainImp
                         return;
                     }
                     final String elevation = split[x];
-                    heightMap[x][z] = Float.parseFloat(elevation);
+                    map.set(x, z, Float.parseFloat(elevation));
                 }
             }
             logger().info("Import finished");
-            session().getEventBus().publish(new ImportFinishedEvent(heightMap));
+            session().getEventBus().publish(new ImportFinishedEvent(map));
         } catch (final IOException | NumberFormatException e) {
             logger().error("Error while importing File", e);
             session().getEventBus().publish(new ImportFailedEvent());

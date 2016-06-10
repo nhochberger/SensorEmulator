@@ -7,16 +7,17 @@ import hochberger.utilities.application.Lifecycle;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.eventbus.EventReceiver;
+import model.HeightMap;
 import model.Position;
 import model.Vector3D;
 
 public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecycle {
 
-    float[][] heightMap;
+    HeightMap heightMap;
 
     public SimpleRayTracingLidar(final BasicSession session) {
         super(session);
-        this.heightMap = new float[0][0];
+        this.heightMap = new HeightMap(0);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
         // TODO Auto-generated method stub
     }
 
-    public double calculateDistance(final Position position, final Vector3D direction) {
+    public int[] determineTargetCoordinates(final Position position, final Vector3D direction) {
         final Vector3D normalizedDirection = direction.normalizedVector();
         boolean found = false;
         int x = 0;
@@ -40,10 +41,18 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
             final Position newPosition = position.addVector(stepVector);
             x = (int) newPosition.getX();
             z = (int) newPosition.getZ();
-            found = newPosition.getY() <= this.heightMap[x][z];
+            found = newPosition.getY() <= this.heightMap.get(x, z);
         }
+        final int[] result = { x, z };
+        return result;
+    }
+
+    public double calculateDistance(final Position position, final Vector3D direction) {
+        final int[] targetCoordinates = determineTargetCoordinates(position, direction);
+        final int x = targetCoordinates[0];
+        final int z = targetCoordinates[1];
         final double deltaX = Math.abs(position.getX() - x);
-        final double deltaY = Math.abs(position.getY() - this.heightMap[x][z]);
+        final double deltaY = Math.abs(position.getY() - this.heightMap.get(x, z));
         final double deltaZ = Math.abs(position.getZ() - z);
         final double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
         return distance;
