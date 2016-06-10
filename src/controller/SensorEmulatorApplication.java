@@ -1,5 +1,7 @@
 package controller;
 
+import controller.communication.LidarSocketListener;
+import controller.communication.SensorSocketListener;
 import controller.events.ImportTerrainEvent;
 import hochberger.utilities.application.ApplicationProperties;
 import hochberger.utilities.application.ApplicationShutdownEvent;
@@ -16,6 +18,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
     private final BasicSession session;
     private final SensorEmulatorGui gui;
     private final SimpleRayTracingLidar lidar;
+    private final SensorSocketListener lidarSocketListener;
 
     public static void main(final String[] args) {
         setUpLoggingServices(SensorEmulatorApplication.class);
@@ -34,6 +37,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         this.session = new BasicSession(applicationProperties, new SimpleEventBus(), getLogger());
         this.gui = new SensorEmulatorGui(this.session);
         this.lidar = new SimpleRayTracingLidar(this.session);
+        this.lidarSocketListener = new LidarSocketListener(this.session, 50000);
     }
 
     @Override
@@ -42,6 +46,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         this.session.getEventBus().register(new CSVTerrainImporter(this.session), ImportTerrainEvent.class);
         this.session.getEventBus().register(new ApplicationShutdownEventReceiver(this.session, this), ApplicationShutdownEvent.class);
         this.lidar.start();
+        this.lidarSocketListener.start();
         this.gui.activate();
     }
 
@@ -49,6 +54,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
     public void stop() {
         this.gui.deactivate();
         this.lidar.stop();
+        this.lidarSocketListener.stop();
         super.stop();
     }
 }
