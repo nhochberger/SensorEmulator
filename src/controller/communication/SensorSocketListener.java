@@ -19,6 +19,7 @@ import hochberger.utilities.threading.ThreadRunner;
 public abstract class SensorSocketListener extends SessionBasedObject implements Lifecycle {
 
     private static final char REQUEST_DELIMITER = '?';
+    private static final String ANSWER_DELIMITER = "!";
     private final int port;
     private boolean running;
 
@@ -84,7 +85,7 @@ public abstract class SensorSocketListener extends SessionBasedObject implements
     protected void writeToSocket(final String message, final Socket socket) throws IOException {
         final OutputStream outputStream = socket.getOutputStream();
         final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-        writer.write(message);
+        writer.write(message + ANSWER_DELIMITER);
         writer.flush();
     }
 

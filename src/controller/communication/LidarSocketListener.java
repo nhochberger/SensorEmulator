@@ -3,19 +3,21 @@ package controller.communication;
 import java.io.IOException;
 import java.net.Socket;
 
-import controller.events.LidarRequestEvent;
 import hochberger.utilities.application.session.BasicSession;
 import model.Position;
 import model.Vector3D;
+import model.sensors.SimpleRayTracingLidar;
 
 public class LidarSocketListener extends SensorSocketListener {
 
     private static final String PART_SEPARATOR = ";";
     private static final String NUMBER_SEPARATOR = ",";
     private final SensorRequestFormatValidator validator;
+    private final SimpleRayTracingLidar lidar;
 
-    public LidarSocketListener(final BasicSession session, final int port) {
+    public LidarSocketListener(final BasicSession session, final SimpleRayTracingLidar lidar, final int port) {
         super(session, port);
+        this.lidar = lidar;
         this.validator = new SensorRequestFormatValidator();
     }
 
@@ -30,7 +32,8 @@ public class LidarSocketListener extends SensorSocketListener {
         final String[] directionParts = parts[1].split(NUMBER_SEPARATOR);
         final Position position = parsePosition(positionParts);
         final Vector3D direction = parseDirection(directionParts);
-        session().getEventBus().publish(new LidarRequestEvent(position, direction));
+        final double calculatedDistance = this.lidar.calculateDistance(position, direction);
+        writeToSocket(String.valueOf(calculatedDistance), clientSocket);
     }
 
     private Position parsePosition(final String[] positionParts) {

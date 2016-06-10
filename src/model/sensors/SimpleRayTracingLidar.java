@@ -30,7 +30,7 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
         // TODO Auto-generated method stub
     }
 
-    private double calculateDistance(final Position position, final Vector3D direction) {
+    public double calculateDistance(final Position position, final Vector3D direction) {
         final Vector3D normalizedDirection = direction.normalizedVector();
         boolean found = false;
         int x = 0;

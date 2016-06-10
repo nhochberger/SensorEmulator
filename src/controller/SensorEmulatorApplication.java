@@ -37,7 +37,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         this.session = new BasicSession(applicationProperties, new SimpleEventBus(), getLogger());
         this.gui = new SensorEmulatorGui(this.session);
         this.lidar = new SimpleRayTracingLidar(this.session);
-        this.lidarSocketListener = new LidarSocketListener(this.session, 50000);
+        this.lidarSocketListener = new LidarSocketListener(this.session, this.lidar, 50000);
     }
 
     @Override
