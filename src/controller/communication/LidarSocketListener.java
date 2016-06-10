@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import hochberger.utilities.application.session.BasicSession;
+import model.HeightMap;
+import model.HeightMapToStringConverter;
 import model.Position;
 import model.Vector3D;
 import model.sensors.SimpleRayTracingLidar;
@@ -14,11 +16,13 @@ public class LidarSocketListener extends SensorSocketListener {
     private static final String NUMBER_SEPARATOR = ",";
     private final SensorRequestFormatValidator validator;
     private final SimpleRayTracingLidar lidar;
+    private final HeightMapToStringConverter converter;
 
     public LidarSocketListener(final BasicSession session, final SimpleRayTracingLidar lidar, final int port) {
         super(session, port);
         this.lidar = lidar;
         this.validator = new SensorRequestFormatValidator();
+        this.converter = new HeightMapToStringConverter();
     }
 
     @Override
@@ -32,8 +36,10 @@ public class LidarSocketListener extends SensorSocketListener {
         final String[] directionParts = parts[1].split(NUMBER_SEPARATOR);
         final Position position = parsePosition(positionParts);
         final Vector3D direction = parseDirection(directionParts);
-        final double calculatedDistance = this.lidar.calculateDistance(position, direction);
-        writeToSocket(String.valueOf(calculatedDistance), clientSocket);
+        // final double calculatedDistance = this.lidar.calculateDistance(position, direction);
+        final HeightMap map = this.lidar.createTargetHeightMap(position, direction);
+        System.err.println(this.converter.convert(map));
+        writeToSocket(this.converter.convert(map), clientSocket);
     }
 
     private Position parsePosition(final String[] positionParts) {

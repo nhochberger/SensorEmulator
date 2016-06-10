@@ -45,7 +45,7 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
                 @Override
                 public void run() {
                     final DecimalFormat formatter = new DecimalFormat("0.00000");
-                    SensorEmulatorGui.this.mainFrame.setLidarResultText(formatter.format(event.getDistance()) + " u");
+                    // SensorEmulatorGui.this.mainFrame.setLidarResultText(formatter.format(event.getHeightMap()) + " u");
                 }
             });
         }

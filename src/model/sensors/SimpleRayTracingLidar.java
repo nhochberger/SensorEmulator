@@ -13,6 +13,8 @@ import model.Vector3D;
 
 public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecycle {
 
+    public static final int BEAM_RADIUS = 5;
+
     HeightMap heightMap;
 
     public SimpleRayTracingLidar(final BasicSession session) {
@@ -47,16 +49,30 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
         return result;
     }
 
-    public double calculateDistance(final Position position, final Vector3D direction) {
-        final int[] targetCoordinates = determineTargetCoordinates(position, direction);
-        final int x = targetCoordinates[0];
-        final int z = targetCoordinates[1];
-        final double deltaX = Math.abs(position.getX() - x);
-        final double deltaY = Math.abs(position.getY() - this.heightMap.get(x, z));
-        final double deltaZ = Math.abs(position.getZ() - z);
-        final double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-        return distance;
+    public HeightMap createTargetHeightMap(final Position position, final Vector3D direction) {
+        final HeightMap resultMap = new HeightMap(2 * BEAM_RADIUS + 1);
+        final int[] target = determineTargetCoordinates(position, direction);
+        final int targetX = target[0];
+        final int targetZ = target[1];
+        for (int x = 0; x <= 2 * BEAM_RADIUS + 1; x++) {
+            for (int z = 0; z <= 2 * BEAM_RADIUS + 1; z++) {
+                final double trueElevation = this.heightMap.get(x, z);
+                resultMap.set(x, z, trueElevation);
+            }
+        }
+        return resultMap;
     }
+
+    // public double calculateDistance(final Position position, final Vector3D direction) {
+    // final int[] targetCoordinates = determineTargetCoordinates(position, direction);
+    // final int x = targetCoordinates[0];
+    // final int z = targetCoordinates[1];
+    // final double deltaX = Math.abs(position.getX() - x);
+    // final double deltaY = Math.abs(position.getY() - this.heightMap.get(x, z));
+    // final double deltaZ = Math.abs(position.getZ() - z);
+    // final double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+    // return distance;
+    // }
 
     private final class TerrainImportEventHandler implements EventReceiver<ImportFinishedEvent> {
 
@@ -78,8 +94,8 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
 
         @Override
         public void receive(final LidarRequestEvent event) {
-            final double distance = calculateDistance(event.getPosition(), event.getDirection());
-            session().getEventBus().publish(new LidarResultEvent(distance));
+            final HeightMap map = createTargetHeightMap(event.getPosition(), event.getDirection());
+            session().getEventBus().publish(new LidarResultEvent(map));
         }
     }
 }
