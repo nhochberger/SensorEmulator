@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.events.ImportTerrainEvent;
@@ -24,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     private final BasicSession session;
-    private JLabel lidarResultLabel;
+    private JTextArea lidarResultTextField;
 
     public SensorEmulatorMainFrame(final BasicSession session) {
         super(session.getProperties().title() + Text.space() + session.getProperties().version());
@@ -33,11 +35,11 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     @Override
     protected void buildUI() {
-        setSize(500, 500);
+        setSize(1000, 500);
         center();
         disposeOnClose();
         SetLookAndFeelTo.systemLookAndFeel();
-        setContentPane(new JPanel(new MigLayout()));
+        setContentPane(new JPanel(new MigLayout("", "[]", "[]")));
         disposeOnClose();
         add(importButton(), "wrap");
         add(lidarPanel(), "wrap");
@@ -79,8 +81,10 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
         panel.add(directionZ, "wrap");
         final JLabel result = new JLabel(new DirectI18N("Result:").toString());
         panel.add(result);
-        this.lidarResultLabel = new JLabel();
-        panel.add(this.lidarResultLabel, "span 3, wrap");
+        this.lidarResultTextField = new JTextArea();
+        this.lidarResultTextField.setSize(150, 150);
+        this.lidarResultTextField.setPreferredSize(new Dimension(775, 225));
+        panel.add(this.lidarResultTextField, "span 3, wrap");
         final JButton issueRequestButton = new JButton(new DirectI18N("Send").toString());
         issueRequestButton.addActionListener(new ActionListener() {
 
@@ -97,7 +101,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
                     final Position position = new Position(posX, posY, posZ);
                     SensorEmulatorMainFrame.this.session.getEventBus().publishFromEDT(new LidarRequestEvent(position, direction));
                 } catch (final NumberFormatException exception) {
-                    SensorEmulatorMainFrame.this.lidarResultLabel.setText(new DirectI18N("Please check input").toString());
+                    SensorEmulatorMainFrame.this.lidarResultTextField.setText(new DirectI18N("Please check input").toString());
                 }
             }
         });
@@ -106,6 +110,6 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
     }
 
     public void setLidarResultText(final String text) {
-        this.lidarResultLabel.setText(text);
+        this.lidarResultTextField.setText(text);
     }
 }
