@@ -2,6 +2,7 @@ package view;
 
 import java.text.DecimalFormat;
 
+import controller.events.ImportFinishedEvent;
 import controller.events.LidarResultEvent;
 import edt.EDT;
 import hochberger.utilities.application.session.BasicSession;
@@ -27,12 +28,25 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
         this.mainFrame.show();
         this.mainFrame.addWindowListener(new WindowClosedApplicationShutdownEventPublisher(session()));
         session().getEventBus().register(new LidarResultHandler(), LidarResultEvent.class);
+        session().getEventBus().register(new ImportFinishedEventHandler(), ImportFinishedEvent.class);
     }
 
     @Override
     public void deactivate() {
         this.mainFrame.hide();
         logger().info("GUI deactivated");
+    }
+
+    public final class ImportFinishedEventHandler implements EventReceiver<ImportFinishedEvent> {
+
+        public ImportFinishedEventHandler() {
+            super();
+        }
+
+        @Override
+        public void receive(final ImportFinishedEvent event) {
+            SensorEmulatorGui.this.mainFrame.setHeightMap(event.getHeightMap());
+        }
     }
 
     public final class LidarResultHandler implements EventReceiver<LidarResultEvent> {
