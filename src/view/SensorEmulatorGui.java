@@ -47,7 +47,6 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
                 @Override
                 public void run() {
                     final DecimalFormat decimalFormatter = new DecimalFormat("##0.00");
-                    // SensorEmulatorGui.this.mainFrame.setLidarResultText(formatter.format(event.getHeightMap()) + " u");
                     final StringBuffer buffer = new StringBuffer();
                     final HeightMap heightMap = event.getHeightMap();
                     for (int z = 0; z < heightMap.getDimension(); z++) {
