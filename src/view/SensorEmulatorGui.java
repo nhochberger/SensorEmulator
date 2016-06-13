@@ -94,7 +94,9 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
             final double viewTargetX = position.getX() + n * direction.getX();
             final double viewTargetZ = position.getZ() + n * direction.getZ();
             final Position viewTargetPosition = new Position(viewTargetX, 0, viewTargetZ);
+            logger().info("Optical sensor: position: " + position + ", view target position: " + viewTargetPosition);
             SensorEmulatorGui.this.mainFrame.setOpticalSensor(position, viewTargetPosition);
+            SensorEmulatorGui.this.mainFrame.prepareScreenshot();
         }
     }
 }

@@ -57,7 +57,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
     }
 
     private JPanel settingsPanel() {
-        final JPanel panel = new JPanel(new MigLayout("", "[]100[]5[]15[]5[]", "[][][]"));
+        final JPanel panel = new JPanel(new MigLayout("", "[]100[]5[]15[]5[]100[]", "[][][]"));
         panel.setBorder(BorderFactory.createTitledBorder(new DirectI18N("Settings").toString()));
         panel.add(importButton(), "cell 0 0");
 
@@ -98,7 +98,33 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
             }
         });
         panel.add(issueRequestButton, "cell 0 2");
+        panel.add(screenshotStoragePanel(), "cell 5 0, span 1 2");
+        return panel;
+    }
 
+    private JPanel screenshotStoragePanel() {
+        final JPanel panel = new JPanel(new MigLayout());
+        panel.add(new JLabel(new DirectI18N("Screenshot storage:").toString()), "wrap");
+        final JLabel folderLabel = new JLabel(System.getProperty("user.home"));
+        panel.add(folderLabel, "wrap");
+        final JButton button = new JButton(new DirectI18N("Choose Folder...").toString());
+        button.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home"));
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                final int dialogResult = fileChooser.showOpenDialog(frame());
+                if (!(JFileChooser.APPROVE_OPTION == dialogResult)) {
+                    return;
+                }
+                final String screenshotStoragePath = fileChooser.getSelectedFile().getAbsolutePath();
+                SensorEmulatorMainFrame.this.session.getLogger().info(screenshotStoragePath + " was selected as screenshot storage");
+                SensorEmulatorMainFrame.this.visualization.setScreenshotStorageFolder(screenshotStoragePath);
+            }
+        });
+        panel.add(button);
         return panel;
     }
 
@@ -153,5 +179,9 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     public void setOpticalSensor(final Position position, final Position viewTargetPosition) {
         this.visualization.setOpticalSensor(position, viewTargetPosition);
+    }
+
+    public void prepareScreenshot() {
+        this.visualization.prepareScreenshot();
     }
 }

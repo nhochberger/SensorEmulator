@@ -35,10 +35,12 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
 
     public int[] determineTargetCoordinates(final Position position, final Vector3D direction) {
         final Vector3D normalizedDirection = direction.normalizedVector();
+        logger().info("Lidar: position: " + position + ", direction: " + direction + "(normalized: " + normalizedDirection + ")");
         boolean found = false;
         int x = 0;
         int z = 0;
-        for (int i = 0; !found; i++) {
+        int i;
+        for (i = 0; !found; i++) {
             final Vector3D stepVector = normalizedDirection.multiply(i);
             final Position newPosition = position.addVector(stepVector);
             x = (int) newPosition.getX();
@@ -49,6 +51,7 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
                 break;
             }
         }
+        logger().info("Lidar center beam hits surface at [" + x + ", " + z + "]");
         final int[] result = { x, z };
         return result;
     }

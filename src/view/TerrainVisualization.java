@@ -38,6 +38,7 @@ public class TerrainVisualization implements GLEventListener {
         this.takeScreenshotWithNextRender = false;
         this.position = new Position(250, 1000, 250);
         this.viewTargetPosition = new Position(0, 0, 0);
+        this.screenshotFilePath = System.getProperty("user.home");
     }
 
     @Override
@@ -102,7 +103,7 @@ public class TerrainVisualization implements GLEventListener {
         this.takeScreenshotWithNextRender = false;
         final AWTGLReadBufferUtil util = new AWTGLReadBufferUtil(drawable.getGLProfile(), false);
         final BufferedImage image = util.readPixelsToBufferedImage(drawable.getGL(), true);
-        final File outputfile = new File(this.screenshotFilePath);
+        final File outputfile = new File(this.screenshotFilePath + "/terrain_" + System.currentTimeMillis() + ".png");
         ThreadRunner.startThread(new Runnable() {
 
             @Override
@@ -194,9 +195,12 @@ public class TerrainVisualization implements GLEventListener {
         this.viewTargetPosition = new Position(points.getDimension() / 2, 0, points.getDimension() / 2);
     }
 
-    public void prepareScreenshot(final String filePath) {
-        this.screenshotFilePath = filePath;
+    public void prepareScreenshot() {
         this.takeScreenshotWithNextRender = true;
+    }
+
+    public void setScreenshotStorageFolder(final String filepath) {
+        this.screenshotFilePath = filepath;
     }
 
     public void setOpticalSensor(final Position position, final Position viewTargetPosition) {
