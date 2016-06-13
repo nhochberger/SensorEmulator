@@ -32,7 +32,7 @@ import net.miginfocom.swing.MigLayout;
 public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     private final BasicSession session;
-    private JTextArea lidarResultTextField;
+    private JTextArea lidarResultTextArea;
     private TerrainVisualization visualization;
     private final FPSAnimator animator;
 
@@ -44,36 +44,36 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     @Override
     protected void buildUI() {
-        setSize(1000, 1000);
+        setSize(825, 975);
         center();
         disposeOnClose();
         SetLookAndFeelTo.systemLookAndFeel();
-        setContentPane(new JPanel(new MigLayout("", "[]", "[]")));
+        setContentPane(new JPanel(new MigLayout("", "5[]5", "[]")));
         disposeOnClose();
-        add(settingsPanel(), "wrap");
-        add(lidarPanel(), "wrap");
-        add(opticalSensorPanel());
+        add(settingsPanel(), "grow, wrap");
+        add(lidarPanel(), "grow, wrap");
+        add(opticalSensorPanel(), "grow");
     }
 
     private JPanel settingsPanel() {
-        final JPanel panel = new JPanel();
+        final JPanel panel = new JPanel(new MigLayout("", "[]100[]5[]15[]5[]", "[][][]"));
         panel.setBorder(BorderFactory.createTitledBorder(new DirectI18N("Settings").toString()));
-        panel.add(importButton());
+        panel.add(importButton(), "cell 0 0");
 
-        panel.add(new JLabel(new DirectI18N("Position: ").toString()));
+        panel.add(new JLabel(new DirectI18N("Position: ").toString()), "cell 1 0");
         final JTextField positionX = new JTextField("0.0", 5);
         final JTextField positionY = new JTextField("0.0", 5);
         final JTextField positionZ = new JTextField("0.0", 5);
-        panel.add(positionX);
-        panel.add(positionY);
-        panel.add(positionZ, "wrap");
-        panel.add(new JLabel(new DirectI18N("Direction: ").toString()));
+        panel.add(positionX, "cell 2 0");
+        panel.add(positionY, "cell 2 1");
+        panel.add(positionZ, "cell 2 2");
+        panel.add(new JLabel(new DirectI18N("Direction: ").toString()), "cell 3 0");
         final JTextField directionX = new JTextField("1.0", 5);
         final JTextField directionY = new JTextField("-1.0", 5);
         final JTextField directionZ = new JTextField("1.0", 5);
-        panel.add(directionX);
-        panel.add(directionY);
-        panel.add(directionZ, "wrap");
+        panel.add(directionX, "cell 4 0");
+        panel.add(directionY, "cell 4 1");
+        panel.add(directionZ, "cell 4 2");
 
         final JButton issueRequestButton = new JButton(new DirectI18N("Send").toString());
         issueRequestButton.addActionListener(new ActionListener() {
@@ -91,11 +91,11 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
                     final Position position = new Position(posX, posY, posZ);
                     SensorEmulatorMainFrame.this.session.getEventBus().publishFromEDT(new LidarRequestEvent(position, direction));
                 } catch (final NumberFormatException exception) {
-                    SensorEmulatorMainFrame.this.lidarResultTextField.setText(new DirectI18N("Please check input").toString());
+                    SensorEmulatorMainFrame.this.lidarResultTextArea.setText(new DirectI18N("Please check input").toString());
                 }
             }
         });
-        panel.add(issueRequestButton, "span 4, wrap");
+        panel.add(issueRequestButton, "cell 0 2");
 
         return panel;
     }
@@ -135,15 +135,14 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
     private JPanel lidarPanel() {
         final JPanel panel = new JPanel(new MigLayout());
         panel.setBorder(BorderFactory.createTitledBorder(new DirectI18N("Lidar").toString()));
-        this.lidarResultTextField = new JTextArea();
-        this.lidarResultTextField.setSize(150, 150);
-        this.lidarResultTextField.setPreferredSize(new Dimension(775, 225));
-        panel.add(this.lidarResultTextField, "span 4");
+        this.lidarResultTextArea = new JTextArea();
+        this.lidarResultTextArea.setPreferredSize(new Dimension(775, 225));
+        panel.add(this.lidarResultTextArea);
         return panel;
     }
 
     public void setLidarResultText(final String text) {
-        this.lidarResultTextField.setText(text);
+        this.lidarResultTextArea.setText(text);
     }
 
     public void setHeightMap(final HeightMap map) {
