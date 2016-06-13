@@ -28,7 +28,6 @@ public class TerrainVisualization implements GLEventListener {
     private int height;
     private Position position;
     private Position viewTargetPosition;
-    private boolean alignOpticalSensor;
 
     public TerrainVisualization(final int width, final int height) {
         super();
@@ -39,7 +38,6 @@ public class TerrainVisualization implements GLEventListener {
         this.takeScreenshotWithNextRender = false;
         this.position = new Position(250, 1000, 250);
         this.viewTargetPosition = new Position(0, 0, 0);
-        this.alignOpticalSensor = true;
     }
 
     @Override
@@ -87,23 +85,9 @@ public class TerrainVisualization implements GLEventListener {
         gl.glLoadIdentity();
         gl.glPushMatrix();
 
-        // gl.glRotated(90, 1, 0, 0);
-        // gl.glTranslated(-this.position.getX(), 0, -this.position.getZ());
-
-        // final float h = (float) this.width / (float) this.height;
-        // gl.glViewport(0, 0, this.width, this.height);
-        // gl.glMatrixMode(GL2.GL_PROJECTION);
-        // gl.glLoadIdentity();
-        // this.glu.gluPerspective(45.0f, h, 0.1, 10000.0);
         this.glu.gluLookAt(this.position.getX(), this.position.getY(), this.position.getZ(), this.viewTargetPosition.getX(), this.viewTargetPosition.getY(), this.viewTargetPosition.getZ(), 0, 0, -1);
-        // System.err.println(this.position + "->" + this.viewTargetPosition);
-        // this.glu.gluLookAt(0, 500, 0, 0, 0, 0, 0, 0, -1);
-        // gl.glMatrixMode(GL2.GL_MODELVIEW);
-        // gl.glLoadIdentity();
 
         drawTerrain(gl);
-        // deactivated as they are not shown on optical sensor
-        // drawCoordinates(gl);
 
         takeScreenShot(drawable);
 
@@ -205,42 +189,6 @@ public class TerrainVisualization implements GLEventListener {
         gl.glEnable(GL2.GL_LIGHT0);
     }
 
-    private void drawCoordinates(final GL2 gl) {
-        gl.glPushMatrix();
-        final float[] matShininess = { 0.0f };
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SHININESS, FloatBuffer.wrap(matShininess));
-
-        final float[] matDiffuse = { 0.0f, 0.0f, 0.0f, 0.0f };
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_DIFFUSE, FloatBuffer.wrap(matDiffuse));
-
-        final float[] matSpecular = { 0.0f, 0.0f, 0.0f, 0.0f };
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_SPECULAR, FloatBuffer.wrap(matSpecular));
-
-        gl.glLineWidth(1.5f);
-        gl.glColor3f(0.0f, 1.0f, 0.0f);
-        final float[] matAmbientGreen = { 0.0f, 1.0f, 0.0f, 0.0f };
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, FloatBuffer.wrap(matAmbientGreen));
-        gl.glBegin(GL2.GL_LINES);
-        gl.glVertex3f(0.0f, 0.0f, 0.0f);
-        gl.glVertex3f(10f, 0f, 0f);
-        gl.glEnd();
-        gl.glColor3f(1.0f, 0.0f, 0.0f);
-        final float[] matAmbientRed = { 1.0f, 0.0f, 0.0f, 0.0f };
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, FloatBuffer.wrap(matAmbientRed));
-        gl.glBegin(GL2.GL_LINES);
-        gl.glVertex3f(0.0f, 0.0f, 0.0f);
-        gl.glVertex3f(0f, 10f, 0f);
-        gl.glEnd();
-        final float[] matAmbientBlue = { 0.0f, 0.0f, 1.0f, 0.0f };
-        gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, FloatBuffer.wrap(matAmbientBlue));
-        gl.glColor3f(0.0f, 0.0f, 1.0f);
-        gl.glBegin(GL2.GL_LINES);
-        gl.glVertex3f(0.0f, 0.0f, 0.0f);
-        gl.glVertex3f(0f, 0f, 10f);
-        gl.glEnd();
-        gl.glPopMatrix();
-    }
-
     public void setPoints(final HeightMap points) {
         this.points = points;
         this.position = new Position(points.getDimension() / 2, 1.5 * points.getDimension(), points.getDimension() / 2);
@@ -253,7 +201,6 @@ public class TerrainVisualization implements GLEventListener {
     }
 
     public void setOpticalSensor(final Position position, final Position viewTargetPosition) {
-        this.alignOpticalSensor = true;
         this.position = position;
         this.viewTargetPosition = viewTargetPosition;
     }
