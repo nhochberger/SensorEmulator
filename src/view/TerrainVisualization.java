@@ -156,7 +156,7 @@ public class TerrainVisualization implements GLEventListener {
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
 
-        this.glu.gluPerspective(45.0f, h, 1.0, 20.0);
+        this.glu.gluPerspective(45.0f, h, 1.0, 1000.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -259,7 +259,6 @@ public class TerrainVisualization implements GLEventListener {
 
     public void setPoints(final HeightMap points) {
         this.points = points;
-        System.err.println("sldkfjlsdkjf");
     }
 
     public void prepareScreenshot(final String filePath) {
