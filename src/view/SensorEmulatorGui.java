@@ -88,16 +88,12 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
 
         @Override
         public void receive(final OpticalSensorRequestEvent event) {
-
             final Position position = event.getPosition();
             final Vector3D direction = event.getDirection();
-
             final double n = (-position.getY()) / direction.getY();
             final double viewTargetX = position.getX() + n * direction.getX();
             final double viewTargetZ = position.getZ() + n * direction.getZ();
-
             final Position viewTargetPosition = new Position(viewTargetX, 0, viewTargetZ);
-            System.err.println(viewTargetPosition);
             SensorEmulatorGui.this.mainFrame.setOpticalSensor(position, viewTargetPosition);
         }
     }

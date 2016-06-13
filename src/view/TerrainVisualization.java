@@ -151,7 +151,6 @@ public class TerrainVisualization implements GLEventListener {
 
     @Override
     public void reshape(final GLAutoDrawable drawable, final int x, final int y, final int width, int height) {
-        System.err.println("reshape " + width + " " + height);
         this.width = width;
         this.height = height;
         final GL2 gl = drawable.getGL().getGL2();

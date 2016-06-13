@@ -36,9 +36,7 @@ public class LidarSocketListener extends SensorSocketListener {
         final String[] directionParts = parts[1].split(NUMBER_SEPARATOR);
         final Position position = parsePosition(positionParts);
         final Vector3D direction = parseDirection(directionParts);
-        // final double calculatedDistance = this.lidar.calculateDistance(position, direction);
         final HeightMap map = this.lidar.createTargetHeightMap(position, direction);
-        System.err.println(this.converter.convert(map));
         writeToSocket(this.converter.convert(map), clientSocket);
     }
 
