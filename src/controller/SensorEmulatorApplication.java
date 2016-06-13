@@ -1,6 +1,7 @@
 package controller;
 
 import controller.communication.LidarSocketListener;
+import controller.communication.OpticalSensorSocketListener;
 import controller.communication.SensorSocketListener;
 import controller.events.ImportTerrainEvent;
 import hochberger.utilities.application.ApplicationProperties;
@@ -19,6 +20,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
     private final SensorEmulatorGui gui;
     private final SimpleRayTracingLidar lidar;
     private final SensorSocketListener lidarSocketListener;
+    private final OpticalSensorSocketListener opticalSensorSocketListener;
 
     public static void main(final String[] args) {
         setUpLoggingServices(SensorEmulatorApplication.class);
@@ -38,6 +40,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         this.gui = new SensorEmulatorGui(this.session);
         this.lidar = new SimpleRayTracingLidar(this.session);
         this.lidarSocketListener = new LidarSocketListener(this.session, this.lidar, 50000);
+        this.opticalSensorSocketListener = new OpticalSensorSocketListener(this.session, 50001, this.gui);
     }
 
     @Override
@@ -48,6 +51,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         this.lidar.start();
         this.lidarSocketListener.start();
         this.gui.activate();
+        this.opticalSensorSocketListener.start();
     }
 
     @Override

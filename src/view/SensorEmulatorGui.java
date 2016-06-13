@@ -41,6 +41,19 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
         logger().info("GUI deactivated");
     }
 
+    public String screenshot(final Position position, final Vector3D direction) {
+        this.mainFrame.setOpticalSensor(position, calculateTargetPosition(position, direction));
+        return this.mainFrame.prepareScreenshot();
+    }
+
+    private Position calculateTargetPosition(final Position position, final Vector3D direction) {
+        final double n = (-position.getY()) / direction.getY();
+        final double viewTargetX = position.getX() + n * direction.getX();
+        final double viewTargetZ = position.getZ() + n * direction.getZ();
+        final Position viewTargetPosition = new Position(viewTargetX, 0, viewTargetZ);
+        return viewTargetPosition;
+    }
+
     public final class ImportFinishedEventHandler implements EventReceiver<ImportFinishedEvent> {
 
         public ImportFinishedEventHandler() {
@@ -90,10 +103,7 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
         public void receive(final OpticalSensorRequestEvent event) {
             final Position position = event.getPosition();
             final Vector3D direction = event.getDirection();
-            final double n = (-position.getY()) / direction.getY();
-            final double viewTargetX = position.getX() + n * direction.getX();
-            final double viewTargetZ = position.getZ() + n * direction.getZ();
-            final Position viewTargetPosition = new Position(viewTargetX, 0, viewTargetZ);
+            final Position viewTargetPosition = calculateTargetPosition(position, direction);
             logger().info("Optical sensor: position: " + position + ", view target position: " + viewTargetPosition);
             SensorEmulatorGui.this.mainFrame.setOpticalSensor(position, viewTargetPosition);
             SensorEmulatorGui.this.mainFrame.prepareScreenshot();

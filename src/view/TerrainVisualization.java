@@ -28,6 +28,8 @@ public class TerrainVisualization implements GLEventListener {
     private int height;
     private Position position;
     private Position viewTargetPosition;
+    private String nextScreenshotFilePath;
+    private int waitCycles;
 
     public TerrainVisualization(final int width, final int height) {
         super();
@@ -39,6 +41,7 @@ public class TerrainVisualization implements GLEventListener {
         this.position = new Position(250, 1000, 250);
         this.viewTargetPosition = new Position(0, 0, 0);
         this.screenshotFilePath = System.getProperty("user.home");
+        this.waitCycles = 15;
     }
 
     @Override
@@ -100,10 +103,14 @@ public class TerrainVisualization implements GLEventListener {
         if (!this.takeScreenshotWithNextRender) {
             return;
         }
+        if (0 >= --this.waitCycles) {
+            return;
+        }
+        this.waitCycles = 15;
         this.takeScreenshotWithNextRender = false;
         final AWTGLReadBufferUtil util = new AWTGLReadBufferUtil(drawable.getGLProfile(), false);
         final BufferedImage image = util.readPixelsToBufferedImage(drawable.getGL(), true);
-        final File outputfile = new File(this.screenshotFilePath + "/terrain_" + System.currentTimeMillis() + ".png");
+        final File outputfile = new File(this.nextScreenshotFilePath);
         ThreadRunner.startThread(new Runnable() {
 
             @Override
@@ -125,7 +132,7 @@ public class TerrainVisualization implements GLEventListener {
         final float[] matAmbient = { 0.1f, 0.1f, 0.1f, 0.0f };
         gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_AMBIENT, FloatBuffer.wrap(matAmbient));
 
-        final float[] matDiffuse = { 0.7f, 0.6f, 0.6f, 1.0f };
+        final float[] matDiffuse = { 0.7f, 0.7f, 0.7f, 1.0f };
         gl.glMaterialfv(GL2.GL_FRONT, GL2.GL_DIFFUSE, FloatBuffer.wrap(matDiffuse));
 
         final float[] matSpecular = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -173,10 +180,10 @@ public class TerrainVisualization implements GLEventListener {
 
         gl.glShadeModel(GL2.GL_SMOOTH);
 
-        final float[] ambientLight = { 0.2f, 0.4f, 0.2f, 0f };
+        final float[] ambientLight = { 0.4f, 0.4f, 0.4f, 0f };
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambientLight, 0);
 
-        final float[] diffuseLight = { 0.7f, 1f, 0.8f, 0f };
+        final float[] diffuseLight = { 0.7f, 0.7f, 0.7f, 0f };
         gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuseLight, 0);
 
         final float[] specularLight = { 0.3f, 0.3f, 0.3f, 0f };
@@ -195,8 +202,10 @@ public class TerrainVisualization implements GLEventListener {
         this.viewTargetPosition = new Position(points.getDimension() / 2, 0, points.getDimension() / 2);
     }
 
-    public void prepareScreenshot() {
+    public String prepareScreenshot() {
         this.takeScreenshotWithNextRender = true;
+        this.nextScreenshotFilePath = this.screenshotFilePath + "/terrain_" + System.currentTimeMillis() + ".png";
+        return this.nextScreenshotFilePath;
     }
 
     public void setScreenshotStorageFolder(final String filepath) {

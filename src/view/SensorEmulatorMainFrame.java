@@ -181,7 +181,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
         this.visualization.setOpticalSensor(position, viewTargetPosition);
     }
 
-    public void prepareScreenshot() {
-        this.visualization.prepareScreenshot();
+    public String prepareScreenshot() {
+        return this.visualization.prepareScreenshot();
     }
 }

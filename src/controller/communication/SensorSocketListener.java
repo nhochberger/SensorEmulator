@@ -15,18 +15,27 @@ import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.files.Closer;
 import hochberger.utilities.threading.ThreadRunner;
+import model.HeightMapToStringConverter;
+import model.Position;
+import model.Vector3D;
 
 public abstract class SensorSocketListener extends SessionBasedObject implements Lifecycle {
 
     private static final char REQUEST_DELIMITER = '?';
     private static final String ANSWER_DELIMITER = "!";
+    private static final String PART_SEPARATOR = ";";
+    private static final String NUMBER_SEPARATOR = ",";
     private final int port;
     private boolean running;
+    private final SensorRequestFormatValidator validator;
+    private final HeightMapToStringConverter converter;
 
     public SensorSocketListener(final BasicSession session, final int port) {
         super(session);
         this.port = port;
         this.running = false;
+        this.validator = new SensorRequestFormatValidator();
+        this.converter = new HeightMapToStringConverter();
     }
 
     @Override
@@ -89,10 +98,71 @@ public abstract class SensorSocketListener extends SessionBasedObject implements
         writer.flush();
     }
 
+    protected Position parsePosition(final String request) {
+        final String[] parts = request.split(PART_SEPARATOR);
+        final String[] positionParts = parts[0].split(NUMBER_SEPARATOR);
+        final double positionX = Double.parseDouble(positionParts[0]);
+        final double positionY = Double.parseDouble(positionParts[1]);
+        final double positionZ = Double.parseDouble(positionParts[2]);
+        final Position position = createCorrectedPosition(positionX, positionY, positionZ);
+        return position;
+    }
+
+    protected Vector3D parseDirection(final String request) {
+        final String[] parts = request.split(PART_SEPARATOR);
+        final String[] directionParts = parts[1].split(NUMBER_SEPARATOR);
+        final double directionX = Double.parseDouble(directionParts[0]);
+        final double directionY = Double.parseDouble(directionParts[1]);
+        final double directionZ = Double.parseDouble(directionParts[2]);
+        final Vector3D direction = createCorrectedDirection(directionX, directionY, directionZ);
+        return direction;
+    }
+
+    /**
+     *
+     * The client side of this application uses a coordinate system that slightly differs from the one used here (and in OpenGL). This method exchanges the y component with the z component in order to
+     * provide the required format.
+     *
+     * @param positionX
+     * @param positionY
+     * @param positionZ
+     * @return adjusted position
+     */
+    private Position createCorrectedPosition(final double positionX, final double positionY, final double positionZ) {
+        return new Position(positionX, positionZ, positionY);
+    }
+
+    /**
+     *
+     * The client side of this application uses a coordinate system that slightly differs from the one used here (and in OpenGL). This method exchanges the y component with the z component in order to
+     * provide the required format.
+     *
+     * @param directionX
+     * @param directionY
+     * @param directionZ
+     * @return adjusted direction
+     */
+    private Vector3D createCorrectedDirection(final double directionX, final double directionY, final double directionZ) {
+        return new Vector3D(directionX, directionZ, directionY);
+    }
+
+    protected void error(final String request, final Socket clientSocket) throws IOException {
+        logger().error("Incorect format of request " + request);
+        writeToSocket("-1", clientSocket);
+    }
+
     @Override
     public void stop() {
         this.running = false;
 
+    }
+
+    protected HeightMapToStringConverter converter() {
+        return this.converter;
+    }
+
+    protected SensorRequestFormatValidator validator() {
+        return this.validator;
     }
 
     protected abstract void performCommunication(Socket clientSocket) throws IOException;
