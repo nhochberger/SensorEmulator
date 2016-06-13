@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 import controller.events.ImportFinishedEvent;
 import controller.events.LidarResultEvent;
+import controller.events.OpticalSensorRequestEvent;
 import edt.EDT;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
@@ -12,6 +13,8 @@ import hochberger.utilities.gui.ApplicationGui;
 import hochberger.utilities.gui.WindowClosedApplicationShutdownEventPublisher;
 import hochberger.utilities.text.Text;
 import model.HeightMap;
+import model.Position;
+import model.Vector3D;
 
 public class SensorEmulatorGui extends SessionBasedObject implements ApplicationGui {
 
@@ -29,6 +32,7 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
         this.mainFrame.addWindowListener(new WindowClosedApplicationShutdownEventPublisher(session()));
         session().getEventBus().register(new LidarResultHandler(), LidarResultEvent.class);
         session().getEventBus().register(new ImportFinishedEventHandler(), ImportFinishedEvent.class);
+        session().getEventBus().register(new OpticalSensorRequestHandler(), OpticalSensorRequestEvent.class);
     }
 
     @Override
@@ -73,6 +77,28 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
                     SensorEmulatorGui.this.mainFrame.setLidarResultText(buffer.toString());
                 }
             });
+        }
+    }
+
+    public final class OpticalSensorRequestHandler implements EventReceiver<OpticalSensorRequestEvent> {
+
+        public OpticalSensorRequestHandler() {
+            super();
+        }
+
+        @Override
+        public void receive(final OpticalSensorRequestEvent event) {
+
+            final Position position = event.getPosition();
+            final Vector3D direction = event.getDirection();
+
+            final double n = (-position.getY()) / direction.getY();
+            final double viewTargetX = position.getX() + n * direction.getX();
+            final double viewTargetZ = position.getZ() + n * direction.getZ();
+
+            final Position viewTargetPosition = new Position(viewTargetX, 0, viewTargetZ);
+            System.err.println(viewTargetPosition);
+            SensorEmulatorGui.this.mainFrame.setOpticalSensor(position, viewTargetPosition);
         }
     }
 }

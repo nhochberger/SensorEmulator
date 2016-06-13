@@ -16,25 +16,30 @@ import com.jogamp.opengl.util.awt.AWTGLReadBufferUtil;
 
 import hochberger.utilities.threading.ThreadRunner;
 import model.HeightMap;
+import model.Position;
 
 public class TerrainVisualization implements GLEventListener {
 
-    private static final float INITIAL_ZOOM = 0.1f;
     private final GLU glu;
-    private float yAngle;
-    private float xAngle;
-    private float xTranslation;
-    private float yTranslation;
-    private float zoom = INITIAL_ZOOM;
     private HeightMap points;
     private boolean takeScreenshotWithNextRender;
     private String screenshotFilePath;
+    private int width;
+    private int height;
+    private Position position;
+    private Position viewTargetPosition;
+    private boolean alignOpticalSensor;
 
-    public TerrainVisualization() {
+    public TerrainVisualization(final int width, final int height) {
         super();
+        this.width = width;
+        this.height = height;
         this.glu = new GLU();
         this.points = new HeightMap(0);
         this.takeScreenshotWithNextRender = false;
+        this.position = new Position(250, 1000, 250);
+        this.viewTargetPosition = new Position(0, 0, 0);
+        this.alignOpticalSensor = true;
     }
 
     @Override
@@ -48,6 +53,14 @@ public class TerrainVisualization implements GLEventListener {
         gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
         gl.glEnable(GL2.GL_NORMALIZE);
         gl.glEnable(GL2.GL_CULL_FACE);
+
+        final float h = (float) this.width / (float) this.height;
+        gl.glViewport(0, 0, this.width, this.height);
+        gl.glMatrixMode(GL2.GL_PROJECTION);
+        gl.glLoadIdentity();
+        this.glu.gluPerspective(60.0, h, 0.1, 10000.0);
+        gl.glMatrixMode(GL2.GL_MODELVIEW);
+
         lighting(gl);
     }
 
@@ -73,21 +86,29 @@ public class TerrainVisualization implements GLEventListener {
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         gl.glPushMatrix();
-        gl.glTranslatef(0f, 0f, -15.0f);
-        gl.glScaled(this.getZoom(), this.getZoom(), this.getZoom());
-        gl.glTranslatef(this.xTranslation, this.yTranslation, 0f);
-        gl.glRotatef(this.getxAngle(), 1.0f, 0.0f, 0.0f);
-        gl.glRotatef(this.getyAngle(), 0.0f, 1.0f, 0.0f);
-        gl.glTranslatef(-this.points.getDimension() / 2, 0f, -this.points.getDimension() / 2);
 
-        drawCoordinates(gl);
+        // gl.glRotated(90, 1, 0, 0);
+        // gl.glTranslated(-this.position.getX(), 0, -this.position.getZ());
+
+        // final float h = (float) this.width / (float) this.height;
+        // gl.glViewport(0, 0, this.width, this.height);
+        // gl.glMatrixMode(GL2.GL_PROJECTION);
+        // gl.glLoadIdentity();
+        // this.glu.gluPerspective(45.0f, h, 0.1, 10000.0);
+        this.glu.gluLookAt(this.position.getX(), this.position.getY(), this.position.getZ(), this.viewTargetPosition.getX(), this.viewTargetPosition.getY(), this.viewTargetPosition.getZ(), 0, 0, -1);
+        // System.err.println(this.position + "->" + this.viewTargetPosition);
+        // this.glu.gluLookAt(0, 500, 0, 0, 0, 0, 0, 0, -1);
+        // gl.glMatrixMode(GL2.GL_MODELVIEW);
+        // gl.glLoadIdentity();
 
         drawTerrain(gl);
+        // deactivated as they are not shown on optical sensor
+        // drawCoordinates(gl);
 
         takeScreenShot(drawable);
 
-        gl.glPopMatrix();
         gl.glFlush();
+        gl.glPopMatrix();
     }
 
     private void takeScreenShot(final GLAutoDrawable drawable) {
@@ -146,6 +167,9 @@ public class TerrainVisualization implements GLEventListener {
 
     @Override
     public void reshape(final GLAutoDrawable drawable, final int x, final int y, final int width, int height) {
+        System.err.println("reshape " + width + " " + height);
+        this.width = width;
+        this.height = height;
         final GL2 gl = drawable.getGL().getGL2();
         if (height <= 0) {
             height = 1;
@@ -156,7 +180,7 @@ public class TerrainVisualization implements GLEventListener {
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
 
-        this.glu.gluPerspective(45.0f, h, 1.0, 1000.0);
+        this.glu.gluPerspective(45.0f, h, 1.0, 10000.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -217,52 +241,20 @@ public class TerrainVisualization implements GLEventListener {
         gl.glPopMatrix();
     }
 
-    public float getZoom() {
-        return this.zoom;
-    }
-
-    public void setZoom(final float zoom) {
-        this.zoom = zoom;
-    }
-
-    public float getxAngle() {
-        return this.xAngle;
-    }
-
-    public void setxAngle(final float xAngle) {
-        this.xAngle = xAngle;
-    }
-
-    public float getyAngle() {
-        return this.yAngle;
-    }
-
-    public void setyAngle(final float yAngle) {
-        this.yAngle = yAngle;
-    }
-
-    public float getxTranslation() {
-        return this.xTranslation;
-    }
-
-    public void setxTranslation(final float xTranslation) {
-        this.xTranslation = xTranslation;
-    }
-
-    public float getyTranslation() {
-        return this.yTranslation;
-    }
-
-    public void setyTranslation(final float yTranslation) {
-        this.yTranslation = yTranslation;
-    }
-
     public void setPoints(final HeightMap points) {
         this.points = points;
+        this.position = new Position(points.getDimension() / 2, 1.5 * points.getDimension(), points.getDimension() / 2);
+        this.viewTargetPosition = new Position(points.getDimension() / 2, 0, points.getDimension() / 2);
     }
 
     public void prepareScreenshot(final String filePath) {
         this.screenshotFilePath = filePath;
         this.takeScreenshotWithNextRender = true;
+    }
+
+    public void setOpticalSensor(final Position position, final Position viewTargetPosition) {
+        this.alignOpticalSensor = true;
+        this.position = position;
+        this.viewTargetPosition = viewTargetPosition;
     }
 }

@@ -19,6 +19,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import controller.events.ImportTerrainEvent;
 import controller.events.LidarRequestEvent;
+import controller.events.OpticalSensorRequestEvent;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.gui.EDTSafeFrame;
 import hochberger.utilities.gui.lookandfeel.SetLookAndFeelTo;
@@ -62,15 +63,15 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
         panel.add(new JLabel(new DirectI18N("Position: ").toString()), "cell 1 0");
         final JTextField positionX = new JTextField("0.0", 5);
-        final JTextField positionY = new JTextField("0.0", 5);
+        final JTextField positionY = new JTextField("500.0", 5);
         final JTextField positionZ = new JTextField("0.0", 5);
         panel.add(positionX, "cell 2 0");
         panel.add(positionY, "cell 2 1");
         panel.add(positionZ, "cell 2 2");
         panel.add(new JLabel(new DirectI18N("Direction: ").toString()), "cell 3 0");
-        final JTextField directionX = new JTextField("1.0", 5);
+        final JTextField directionX = new JTextField("0.0", 5);
         final JTextField directionY = new JTextField("-1.0", 5);
-        final JTextField directionZ = new JTextField("1.0", 5);
+        final JTextField directionZ = new JTextField("0.0", 5);
         panel.add(directionX, "cell 4 0");
         panel.add(directionY, "cell 4 1");
         panel.add(directionZ, "cell 4 2");
@@ -90,6 +91,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
                     final Vector3D direction = new Vector3D(dirX, dirY, dirZ);
                     final Position position = new Position(posX, posY, posZ);
                     SensorEmulatorMainFrame.this.session.getEventBus().publishFromEDT(new LidarRequestEvent(position, direction));
+                    SensorEmulatorMainFrame.this.session.getEventBus().publishFromEDT(new OpticalSensorRequestEvent(position, direction));
                 } catch (final NumberFormatException exception) {
                     SensorEmulatorMainFrame.this.lidarResultTextArea.setText(new DirectI18N("Please check input").toString());
                 }
@@ -107,7 +109,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
         final GLCapabilities caps = new GLCapabilities(glp);
         final GLCanvas canvas = new GLCanvas(caps);
         canvas.setPreferredSize(new Dimension(775, 500));
-        this.visualization = new TerrainVisualization();
+        this.visualization = new TerrainVisualization(775, 500);
         canvas.addGLEventListener(this.visualization);
         this.animator.add(canvas);
         this.animator.start();
@@ -147,5 +149,9 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     public void setHeightMap(final HeightMap map) {
         this.visualization.setPoints(map);
+    }
+
+    public void setOpticalSensor(final Position position, final Position viewTargetPosition) {
+        this.visualization.setOpticalSensor(position, viewTargetPosition);
     }
 }

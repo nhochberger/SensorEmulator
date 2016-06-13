@@ -44,6 +44,10 @@ public class SimpleRayTracingLidar extends SessionBasedObject implements Lifecyc
             x = (int) newPosition.getX();
             z = (int) newPosition.getZ();
             found = newPosition.getY() <= this.heightMap.get(x, z);
+            if (i >= 100000) {
+                logger().info("Lidar was unable to gather information. direction of Lidar beams.");
+                break;
+            }
         }
         final int[] result = { x, z };
         return result;
