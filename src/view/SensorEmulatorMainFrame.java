@@ -122,6 +122,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
                 final String screenshotStoragePath = fileChooser.getSelectedFile().getAbsolutePath();
                 SensorEmulatorMainFrame.this.session.getLogger().info(screenshotStoragePath + " was selected as screenshot storage");
                 SensorEmulatorMainFrame.this.visualization.setScreenshotStorageFolder(screenshotStoragePath);
+                folderLabel.setText(screenshotStoragePath);
             }
         });
         panel.add(button);

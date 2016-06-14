@@ -20,6 +20,7 @@ import model.Position;
 
 public class TerrainVisualization implements GLEventListener {
 
+    private static final int WAIT_CYCLES = 5;
     private final GLU glu;
     private HeightMap points;
     private boolean takeScreenshotWithNextRender;
@@ -41,7 +42,7 @@ public class TerrainVisualization implements GLEventListener {
         this.position = new Position(250, 1000, 250);
         this.viewTargetPosition = new Position(0, 0, 0);
         this.screenshotFilePath = System.getProperty("user.home");
-        this.waitCycles = 15;
+        this.waitCycles = WAIT_CYCLES;
     }
 
     @Override
@@ -103,10 +104,10 @@ public class TerrainVisualization implements GLEventListener {
         if (!this.takeScreenshotWithNextRender) {
             return;
         }
-        if (0 >= --this.waitCycles) {
+        if (0 < --this.waitCycles) {
             return;
         }
-        this.waitCycles = 15;
+        this.waitCycles = WAIT_CYCLES;
         this.takeScreenshotWithNextRender = false;
         final AWTGLReadBufferUtil util = new AWTGLReadBufferUtil(drawable.getGLProfile(), false);
         final BufferedImage image = util.readPixelsToBufferedImage(drawable.getGL(), true);
