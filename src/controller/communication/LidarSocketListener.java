@@ -7,13 +7,13 @@ import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.mathematics.Vector3D;
 import model.HeightMap;
 import model.Position;
-import model.sensors.SimpleRayTracingLidar;
+import model.sensors.Lidar;
 
 public class LidarSocketListener extends SensorSocketListener {
 
-    private final SimpleRayTracingLidar lidar;
+    private final Lidar lidar;
 
-    public LidarSocketListener(final BasicSession session, final SimpleRayTracingLidar lidar, final int port) {
+    public LidarSocketListener(final BasicSession session, final Lidar lidar, final int port) {
         super(session, port);
         this.lidar = lidar;
     }

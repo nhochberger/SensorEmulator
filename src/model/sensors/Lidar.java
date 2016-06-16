@@ -74,7 +74,7 @@ public abstract class Lidar extends SessionBasedObject implements Lifecycle {
 
         @Override
         public void receive(final ImportFinishedEvent event) {
-            Lidar.this.heightMap = event.getHeightMap();
+            heightMap(event.getHeightMap());
         }
     }
 
