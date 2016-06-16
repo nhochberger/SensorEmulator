@@ -12,6 +12,7 @@ import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.eventbus.SimpleEventBus;
 import model.importer.CSVTerrainImporter;
 import model.sensors.SimpleRayTracingLidar;
+import model.sensors.TrigonometryAwareSimpleRayTracingLidar;
 import view.SensorEmulatorGui;
 
 public class SensorEmulatorApplication extends BasicLoggedApplication {
@@ -38,7 +39,7 @@ public class SensorEmulatorApplication extends BasicLoggedApplication {
         super();
         this.session = new BasicSession(applicationProperties, new SimpleEventBus(), getLogger());
         this.gui = new SensorEmulatorGui(this.session);
-        this.lidar = new SimpleRayTracingLidar(this.session);
+        this.lidar = new TrigonometryAwareSimpleRayTracingLidar(this.session);// new SimpleRayTracingLidar(this.session);
         this.lidarSocketListener = new LidarSocketListener(this.session, this.lidar, 50000);
         this.opticalSensorSocketListener = new OpticalSensorSocketListener(this.session, 50001, this.gui);
     }
