@@ -23,11 +23,11 @@ import controller.events.OpticalSensorRequestEvent;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.gui.EDTSafeFrame;
 import hochberger.utilities.gui.lookandfeel.SetLookAndFeelTo;
+import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.text.Text;
 import hochberger.utilities.text.i18n.DirectI18N;
 import model.HeightMap;
 import model.Position;
-import model.Vector3D;
 import net.miginfocom.swing.MigLayout;
 
 public class SensorEmulatorMainFrame extends EDTSafeFrame {

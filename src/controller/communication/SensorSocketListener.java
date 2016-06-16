@@ -14,10 +14,10 @@ import hochberger.utilities.application.Lifecycle;
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.files.Closer;
+import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.threading.ThreadRunner;
 import model.HeightMapToStringConverter;
 import model.Position;
-import model.Vector3D;
 
 public abstract class SensorSocketListener extends SessionBasedObject implements Lifecycle {
 

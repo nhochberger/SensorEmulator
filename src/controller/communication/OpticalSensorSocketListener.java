@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 import hochberger.utilities.application.session.BasicSession;
+import hochberger.utilities.mathematics.Vector3D;
 import model.Position;
-import model.Vector3D;
 import view.SensorEmulatorGui;
 
 public class OpticalSensorSocketListener extends SensorSocketListener {

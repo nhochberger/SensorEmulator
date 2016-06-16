@@ -11,10 +11,10 @@ import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.eventbus.EventReceiver;
 import hochberger.utilities.gui.ApplicationGui;
 import hochberger.utilities.gui.WindowClosedApplicationShutdownEventPublisher;
+import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.text.Text;
 import model.HeightMap;
 import model.Position;
-import model.Vector3D;
 
 public class SensorEmulatorGui extends SessionBasedObject implements ApplicationGui {
 

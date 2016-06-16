@@ -1,8 +1,8 @@
 package controller.events;
 
 import hochberger.utilities.eventbus.Event;
+import hochberger.utilities.mathematics.Vector3D;
 import model.Position;
-import model.Vector3D;
 
 public class LidarRequestEvent implements Event {
 

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.Socket;
 
 import hochberger.utilities.application.session.BasicSession;
+import hochberger.utilities.mathematics.Vector3D;
 import model.HeightMap;
 import model.Position;
-import model.Vector3D;
 import model.sensors.SimpleRayTracingLidar;
 
 public class LidarSocketListener extends SensorSocketListener {

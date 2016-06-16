@@ -1,5 +1,6 @@
 package model;
 
+import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.text.Text;
 
 public class Position {

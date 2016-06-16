@@ -1,8 +1,8 @@
 package controller.events;
 
 import hochberger.utilities.eventbus.Event;
+import hochberger.utilities.mathematics.Vector3D;
 import model.Position;
-import model.Vector3D;
 
 public class OpticalSensorRequestEvent implements Event {
     private final Vector3D direction;
