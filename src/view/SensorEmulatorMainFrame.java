@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -162,11 +163,11 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
     }
 
     private JPanel lidarPanel() {
-        final JPanel panel = new JPanel(new MigLayout());
+        final JPanel panel = new JPanel(new MigLayout("", "[775px]", "[200px]"));
         panel.setBorder(BorderFactory.createTitledBorder(new DirectI18N("Lidar").toString()));
         this.lidarResultTextArea = new JTextArea();
-        this.lidarResultTextArea.setPreferredSize(new Dimension(775, 225));
-        panel.add(this.lidarResultTextArea);
+        final JScrollPane scrollPane = new JScrollPane(this.lidarResultTextArea);
+        panel.add(scrollPane, "grow");
         return panel;
     }
 
