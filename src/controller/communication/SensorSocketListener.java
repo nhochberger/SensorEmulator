@@ -88,6 +88,7 @@ public abstract class SensorSocketListener extends SessionBasedObject implements
         while (REQUEST_DELIMITER != (read = reader.read())) {
             message.append((char) read);
         }
+        logger().info("Received request: " + message.toString());
         return message.toString();
     }
 

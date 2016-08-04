@@ -41,4 +41,12 @@ public class TrigonometryAwareSimpleRayTracingLidar extends SimpleRayTracingLida
         final double stepSize = (Math.abs(deltaX1 - deltaX2)) / (2 * beamRadius() + 1);
         return stepSize;
     }
+
+    public final class TargetAreaInformation {
+
+        public TargetAreaInformation() {
+            super();
+        }
+
+    }
 }
