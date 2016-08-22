@@ -63,8 +63,6 @@ public class TerrainVisualization implements GLEventListener {
         gl.glLoadIdentity();
         this.glu.gluPerspective(60.0, h, 0.1, 10000.0);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
-
-        lighting(gl);
     }
 
     @Override
@@ -89,6 +87,8 @@ public class TerrainVisualization implements GLEventListener {
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         gl.glPushMatrix();
+
+        lighting(gl);
 
         this.glu.gluLookAt(this.position.getX(), this.position.getY(), this.position.getZ(), this.viewTargetPosition.getX(), this.viewTargetPosition.getY(), this.viewTargetPosition.getZ(), 0, 0, -1);
 
