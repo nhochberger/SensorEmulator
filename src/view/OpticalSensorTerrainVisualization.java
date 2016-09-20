@@ -220,8 +220,8 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
 
     public void setPoints(final HeightMap points) {
         this.points = points;
-        this.position = new Position(points.getXDimension() / 2, 1.5 * points.getXDimension(), points.getZDimension() / 2);
-        this.viewTargetPosition = new Position(points.getXDimension() / 2, 0, points.getZDimension() / 2);
+        this.position = new Position(points.getXDimension() / 2d, 1.5 * points.getXDimension(), points.getZDimension() / 2d);
+        this.viewTargetPosition = new Position(points.getXDimension() / 2d, 0, points.getZDimension() / 2d);
     }
 
     public String prepareScreenshot() {
