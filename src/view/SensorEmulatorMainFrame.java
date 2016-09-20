@@ -35,7 +35,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
 
     private final BasicSession session;
     private JTextArea lidarResultTextArea;
-    private TerrainVisualization visualization;
+    private OpticalSensorTerrainVisualization visualization;
     private final FPSAnimator animator;
 
     public SensorEmulatorMainFrame(final BasicSession session) {
@@ -137,7 +137,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
         final GLCapabilities caps = new GLCapabilities(glp);
         final GLCanvas canvas = new GLCanvas(caps);
         canvas.setPreferredSize(new Dimension(775, 500));
-        this.visualization = new TerrainVisualization(775, 500);
+        this.visualization = new OpticalSensorTerrainVisualization(775, 500);
         canvas.addGLEventListener(this.visualization);
         this.animator.add(canvas);
         this.animator.start();

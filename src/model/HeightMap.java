@@ -3,16 +3,22 @@ package model;
 public class HeightMap {
 
     private final double[][] points;
-    private final int dimension;
+    private final int xDimension;
+    private final int zDimension;
 
     public HeightMap(final int dimension) {
+        this(dimension, dimension);
+    }
+
+    public HeightMap(final int xDimension, final int zDimension) {
         super();
-        this.dimension = dimension;
-        this.points = new double[dimension][dimension];
+        this.xDimension = xDimension;
+        this.zDimension = zDimension;
+        this.points = new double[xDimension][zDimension];
     }
 
     public void set(final int x, final int z, final double elevation) {
-        if (0 > x || this.dimension <= x || 0 > z || this.dimension <= z) {
+        if (0 > x || this.xDimension <= x || 0 > z || this.zDimension <= z) {
             return;
         }
         this.points[x][z] = elevation;
@@ -25,13 +31,17 @@ public class HeightMap {
      * @return the elevation at the specified point. Double.NEGATIVE_INFINITY if the point is outside the specified area
      */
     public double get(final int x, final int z) {
-        if (0 > x || this.dimension <= x || 0 > z || this.dimension <= z) {
+        if (0 > x || this.xDimension <= x || 0 > z || this.zDimension <= z) {
             return Double.NEGATIVE_INFINITY;
         }
         return this.points[x][z];
     }
 
-    public int getDimension() {
-        return this.dimension;
+    public int getXDimension() {
+        return this.xDimension;
+    }
+
+    public int getZDimension() {
+        return this.zDimension;
     }
 }

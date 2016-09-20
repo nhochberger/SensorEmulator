@@ -8,10 +8,10 @@ public class HeightMapToStringConverter {
 
     public String convert(final HeightMap map) {
         final StringBuffer buffer = new StringBuffer();
-        for (int x = 0; x < map.getDimension(); x++) {
-            for (int z = 0; z < map.getDimension(); z++) {
+        for (int x = 0; x < map.getXDimension(); x++) {
+            for (int z = 0; z < map.getZDimension(); z++) {
                 buffer.append(map.get(x, z));
-                if (z < map.getDimension() - 1) {
+                if (z < map.getZDimension() - 1) {
                     buffer.append(",");
                 }
             }

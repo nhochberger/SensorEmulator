@@ -80,8 +80,8 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
                     final DecimalFormat decimalFormatter = new DecimalFormat("##0.00");
                     final StringBuffer buffer = new StringBuffer();
                     final HeightMap heightMap = event.getHeightMap();
-                    for (int z = 0; z < heightMap.getDimension(); z++) {
-                        for (int x = 0; x < heightMap.getDimension(); x++) {
+                    for (int z = 0; z < heightMap.getZDimension(); z++) {
+                        for (int x = 0; x < heightMap.getXDimension(); x++) {
                             buffer.append(decimalFormatter.format(heightMap.get(x, z)));
                             buffer.append(Text.space(3));
                         }
