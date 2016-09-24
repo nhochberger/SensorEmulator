@@ -37,6 +37,7 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
     private String nextScreenshotFilePath;
     private int waitCycles;
     private Texture texture;
+    private int screenshotCounter;
 
     public OpticalSensorTerrainVisualization(final int width, final int height) {
         super();
@@ -49,6 +50,7 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         this.viewTargetPosition = new Position(0, 0, 0);
         this.screenshotFilePath = System.getProperty("user.home");
         this.waitCycles = WAIT_CYCLES;
+        this.screenshotCounter = 0;
     }
 
     @Override
@@ -161,13 +163,13 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         final TextureCoords coords = this.texture.getImageTexCoords();
         for (int z = 0; z < this.points.getZDimension() - 1; z++) {
             for (int x = 0; x < this.points.getXDimension() - 1; x++) {
-                gl.glVertex3d(2 * x, this.points.get(x, z), 2 * z);
+                gl.glVertex3d(x, this.points.get(x, z), z);
                 gl.glTexCoord2d(coords.bottom(), coords.left());
-                gl.glVertex3d(2 * x, this.points.get(x, z + 1), 2 * (z + 1));
+                gl.glVertex3d(x, this.points.get(x, z + 1), (z + 1));
                 gl.glTexCoord2d(coords.top(), coords.left());
-                gl.glVertex3d(2 * (x + 1), this.points.get(x + 1, z + 1), 2 * (z + 1));
+                gl.glVertex3d((x + 1), this.points.get(x + 1, z + 1), (z + 1));
                 gl.glTexCoord2d(coords.top(), coords.right());
-                gl.glVertex3d(2 * (x + 1), this.points.get(x + 1, z), 2 * z);
+                gl.glVertex3d((x + 1), this.points.get(x + 1, z), z);
                 gl.glTexCoord2d(coords.bottom(), coords.right());
                 final float[] one = { 0, (float) (this.points.get(x, z + 1) - this.points.get(x, z)), 1 };
                 final float[] two = { 1, (float) (this.points.get(x + 1, z) - this.points.get(x, z)), 0 };
@@ -226,7 +228,7 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
 
     public String prepareScreenshot() {
         this.takeScreenshotWithNextRender = true;
-        this.nextScreenshotFilePath = this.screenshotFilePath + "/terrain_" + System.currentTimeMillis() + ".png";
+        this.nextScreenshotFilePath = this.screenshotFilePath + "/terrain_" + System.currentTimeMillis() + "_" + (++this.screenshotCounter) + ".png";
         return this.nextScreenshotFilePath;
     }
 
