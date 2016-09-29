@@ -20,6 +20,8 @@ import com.jogamp.opengl.util.texture.TextureIO;
 
 import hochberger.utilities.application.ResourceLoader;
 import hochberger.utilities.threading.ThreadRunner;
+import hochberger.utilities.timing.Sleeper;
+import hochberger.utilities.timing.ToMilis;
 import model.HeightMap;
 import model.Position;
 
@@ -38,6 +40,7 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
     private int waitCycles;
     private Texture texture;
     private int screenshotCounter;
+    private float[][][] vertexNormals;
 
     public OpticalSensorTerrainVisualization(final int width, final int height) {
         super();
@@ -51,6 +54,7 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         this.screenshotFilePath = System.getProperty("user.home");
         this.waitCycles = WAIT_CYCLES;
         this.screenshotCounter = 0;
+        this.vertexNormals = new float[0][0][0];
     }
 
     @Override
@@ -163,19 +167,18 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         final TextureCoords coords = this.texture.getImageTexCoords();
         for (int z = 0; z < this.points.getZDimension() - 1; z++) {
             for (int x = 0; x < this.points.getXDimension() - 1; x++) {
+                gl.glNormal3f(this.vertexNormals[x][z][0], this.vertexNormals[x][z][1], this.vertexNormals[x][z][2]);
                 gl.glVertex3d(x, this.points.get(x, z), z);
                 gl.glTexCoord2d(coords.bottom(), coords.left());
+                gl.glNormal3f(this.vertexNormals[x][z + 1][0], this.vertexNormals[x][z + 1][1], this.vertexNormals[x][z + 1][2]);
                 gl.glVertex3d(x, this.points.get(x, z + 1), (z + 1));
                 gl.glTexCoord2d(coords.top(), coords.left());
+                gl.glNormal3f(this.vertexNormals[x + 1][z + 1][0], this.vertexNormals[x + 1][z + 1][1], this.vertexNormals[x + 1][z + 1][2]);
                 gl.glVertex3d((x + 1), this.points.get(x + 1, z + 1), (z + 1));
                 gl.glTexCoord2d(coords.top(), coords.right());
+                gl.glNormal3f(this.vertexNormals[x + 1][z][0], this.vertexNormals[x + 1][z][1], this.vertexNormals[x + 1][z][2]);
                 gl.glVertex3d((x + 1), this.points.get(x + 1, z), z);
                 gl.glTexCoord2d(coords.bottom(), coords.right());
-                final float[] one = { 0, (float) (this.points.get(x, z + 1) - this.points.get(x, z)), 1 };
-                final float[] two = { 1, (float) (this.points.get(x + 1, z) - this.points.get(x, z)), 0 };
-                float[] normal = new float[3];
-                normal = VectorUtil.crossVec3(normal, one, two);
-                gl.glNormal3f(normal[0], normal[1], normal[2]);
             }
         }
         gl.glEnd();
@@ -220,7 +223,30 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         gl.glEnable(GL2.GL_LIGHT0);
     }
 
+    private void calculateNormals(final HeightMap points) {
+        final float[][][] areaNormals = new float[points.getXDimension()][points.getZDimension()][3];
+        for (int z = 0; z < points.getZDimension(); z++) {
+            for (int x = 0; x < points.getXDimension(); x++) {
+                final float[] one = { 0, (float) (points.get(x, z + 1) - points.get(x, z)), 1 };
+                final float[] two = { 1, (float) (points.get(x + 1, z) - points.get(x, z)), 0 };
+                areaNormals[x][z] = VectorUtil.crossVec3(areaNormals[x][z], one, two);
+            }
+        }
+        this.vertexNormals = new float[points.getXDimension()][points.getZDimension()][3];
+        for (int z = 1; z < points.getZDimension(); z++) {
+            for (int x = 1; x < points.getXDimension(); x++) {
+                for (int i = 0; i < 3; i++) {
+                    this.vertexNormals[x][z][i] = (areaNormals[x][z][i] + areaNormals[x - 1][z][i] + areaNormals[x][z - 1][i] + areaNormals[x - 1][z - 1][i]) / 4f;
+                }
+                this.vertexNormals[x][z] = VectorUtil.normalizeVec3(this.vertexNormals[x][z]);
+            }
+        }
+    }
+
     public void setPoints(final HeightMap points) {
+        this.points = new HeightMap(0);
+        calculateNormals(points);
+        Sleeper.sleep(ToMilis.seconds(0.5));
         this.points = points;
         this.position = new Position(points.getXDimension() / 2d, 1.5 * points.getXDimension(), points.getZDimension() / 2d);
         this.viewTargetPosition = new Position(points.getXDimension() / 2d, 0, points.getZDimension() / 2d);
