@@ -1,18 +1,18 @@
 package controller.events;
 
 import hochberger.utilities.eventbus.Event;
-import model.HeightMap;
+import model.SurfaceMap;
 
 public class LidarResultEvent implements Event {
 
-    private final HeightMap heightMap;
+    private final SurfaceMap heightMap;
 
-    public LidarResultEvent(final HeightMap heightMap) {
+    public LidarResultEvent(final SurfaceMap heightMap) {
         super();
         this.heightMap = heightMap;
     }
 
-    public HeightMap getHeightMap() {
+    public SurfaceMap getHeightMap() {
         return this.heightMap;
     }
 

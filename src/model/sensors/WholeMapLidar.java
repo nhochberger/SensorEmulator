@@ -2,7 +2,7 @@ package model.sensors;
 
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.mathematics.Vector3D;
-import model.HeightMap;
+import model.SurfaceMap;
 import model.Position;
 
 public class WholeMapLidar extends Lidar {
@@ -13,7 +13,7 @@ public class WholeMapLidar extends Lidar {
     }
 
     @Override
-    public HeightMap createTargetHeightMap(final Position position, final Vector3D direction) {
+    public SurfaceMap createTargetHeightMap(final Position position, final Vector3D direction) {
         return heightMap();
     }
 

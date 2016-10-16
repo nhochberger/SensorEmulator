@@ -1,12 +1,12 @@
 package model;
 
-public class HeightMapToStringConverter {
+public class SurfaceMapToStringConverter {
 
-    public HeightMapToStringConverter() {
+    public SurfaceMapToStringConverter() {
         super();
     }
 
-    public String convert(final HeightMap map) {
+    public String convert(final SurfaceMap map) {
         final StringBuffer buffer = new StringBuffer();
         for (int x = 0; x < map.getXDimension(); x++) {
             for (int z = 0; z < map.getZDimension(); z++) {

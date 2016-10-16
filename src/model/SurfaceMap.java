@@ -1,39 +1,32 @@
 package model;
 
-public class HeightMap {
+import java.util.LinkedList;
+import java.util.List;
+
+public class SurfaceMap {
 
     private final double[][] points;
     private final int xDimension;
     private final int zDimension;
+    private final List<Boulder> boulders;
 
-    public HeightMap(final int dimension) {
+    public SurfaceMap(final int dimension) {
         this(dimension, dimension);
     }
 
-    public HeightMap(final int xDimension, final int zDimension) {
+    public SurfaceMap(final int xDimension, final int zDimension) {
         super();
         this.xDimension = xDimension;
         this.zDimension = zDimension;
         this.points = new double[xDimension][zDimension];
+        this.boulders = new LinkedList<>();
     }
 
     public void set(final int x, final int z, final double elevation) {
-        if (0 > x || this.xDimension <= x || 0 > z || this.zDimension <= z) {
-            return;
-        }
         this.points[x][z] = elevation;
     }
 
-    /**
-     *
-     * @param x
-     * @param z
-     * @return the elevation at the specified point. Double.NEGATIVE_INFINITY if the point is outside the specified area
-     */
     public double get(final int x, final int z) {
-        if (0 > x || this.xDimension <= x || 0 > z || this.zDimension <= z) {
-            return Double.NEGATIVE_INFINITY;
-        }
         return this.points[x][z];
     }
 
@@ -43,5 +36,13 @@ public class HeightMap {
 
     public int getZDimension() {
         return this.zDimension;
+    }
+
+    public void addBoulder(final Boulder boulder) {
+        this.boulders.add(boulder);
+    }
+
+    public List<Boulder> getBoulders() {
+        return this.boulders;
     }
 }

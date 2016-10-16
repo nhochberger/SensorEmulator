@@ -27,7 +27,7 @@ import hochberger.utilities.gui.lookandfeel.SetLookAndFeelTo;
 import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.text.Text;
 import hochberger.utilities.text.i18n.DirectI18N;
-import model.HeightMap;
+import model.SurfaceMap;
 import model.Position;
 import net.miginfocom.swing.MigLayout;
 
@@ -175,7 +175,7 @@ public class SensorEmulatorMainFrame extends EDTSafeFrame {
         this.lidarResultTextArea.setText(text);
     }
 
-    public void setHeightMap(final HeightMap map) {
+    public void setHeightMap(final SurfaceMap map) {
         this.visualization.setPoints(map);
     }
 

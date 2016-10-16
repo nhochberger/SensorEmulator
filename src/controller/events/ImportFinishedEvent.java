@@ -1,18 +1,18 @@
 package controller.events;
 
 import hochberger.utilities.eventbus.Event;
-import model.HeightMap;
+import model.SurfaceMap;
 
 public class ImportFinishedEvent implements Event {
 
-    private final HeightMap heightMap;
+    private final SurfaceMap heightMap;
 
-    public ImportFinishedEvent(final HeightMap map) {
+    public ImportFinishedEvent(final SurfaceMap map) {
         super();
         this.heightMap = map;
     }
 
-    public HeightMap getHeightMap() {
+    public SurfaceMap getHeightMap() {
         return this.heightMap;
     }
 

@@ -5,7 +5,7 @@ import java.net.Socket;
 
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.mathematics.Vector3D;
-import model.HeightMap;
+import model.SurfaceMap;
 import model.Position;
 import model.sensors.Lidar;
 
@@ -26,7 +26,7 @@ public class LidarSocketListener extends SensorSocketListener {
         }
         final Position position = parsePosition(request);
         final Vector3D direction = parseDirection(request);
-        final HeightMap map = this.lidar.createTargetHeightMap(position, direction);
+        final SurfaceMap map = this.lidar.createTargetHeightMap(position, direction);
         writeToSocket(converter().convert(map), clientSocket);
     }
 }

@@ -2,7 +2,7 @@ package model.sensors;
 
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.mathematics.Vector3D;
-import model.HeightMap;
+import model.SurfaceMap;
 import model.Position;
 
 public class SimpleRayTracingLidar extends Lidar {
@@ -12,8 +12,8 @@ public class SimpleRayTracingLidar extends Lidar {
     }
 
     @Override
-    public HeightMap createTargetHeightMap(final Position position, final Vector3D direction) {
-        final HeightMap resultMap = new HeightMap(2 * beamRadius() + 1);
+    public SurfaceMap createTargetHeightMap(final Position position, final Vector3D direction) {
+        final SurfaceMap resultMap = new SurfaceMap(2 * beamRadius() + 1);
         final int[] target = determineTargetCoordinates(position, direction);
         final int targetX = target[0];
         final int targetZ = target[1];

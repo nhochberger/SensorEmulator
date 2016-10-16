@@ -16,7 +16,7 @@ import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.files.Closer;
 import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.threading.ThreadRunner;
-import model.HeightMapToStringConverter;
+import model.SurfaceMapToStringConverter;
 import model.Position;
 
 public abstract class SensorSocketListener extends SessionBasedObject implements Lifecycle {
@@ -28,14 +28,14 @@ public abstract class SensorSocketListener extends SessionBasedObject implements
     private final int port;
     private boolean running;
     private final SensorRequestFormatValidator validator;
-    private final HeightMapToStringConverter converter;
+    private final SurfaceMapToStringConverter converter;
 
     public SensorSocketListener(final BasicSession session, final int port) {
         super(session);
         this.port = port;
         this.running = false;
         this.validator = new SensorRequestFormatValidator();
-        this.converter = new HeightMapToStringConverter();
+        this.converter = new SurfaceMapToStringConverter();
     }
 
     @Override
@@ -158,7 +158,7 @@ public abstract class SensorSocketListener extends SessionBasedObject implements
 
     }
 
-    protected HeightMapToStringConverter converter() {
+    protected SurfaceMapToStringConverter converter() {
         return this.converter;
     }
 

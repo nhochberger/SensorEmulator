@@ -5,56 +5,79 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import controller.events.ImportFailedEvent;
-import controller.events.ImportFinishedEvent;
-import controller.events.ImportTerrainEvent;
 import hochberger.utilities.application.session.BasicSession;
-import hochberger.utilities.application.session.SessionBasedObject;
-import hochberger.utilities.eventbus.EventReceiver;
-import model.HeightMap;
+import model.Boulder;
+import model.SurfaceMap;
 
-public class CSVTerrainImporter extends SessionBasedObject implements TerrainImporter, EventReceiver<ImportTerrainEvent> {
-
-    private static final String DELIMITER = ", ";
+public class CSVTerrainImporter extends TerrainImporter {
 
     public CSVTerrainImporter(final BasicSession session) {
         super(session);
     }
 
     @Override
-    public void importTerrain(final String filepath) {
-        logger().info("Trying to import " + filepath);
-        final File file = new File(filepath);
-        if (!file.exists()) {
-            return;
-        }
-        logger().info("Importing " + file.length() + " bytes");
-        try {
-            final List<String> lines = Files.readAllLines(file.toPath());
-            final int dimension = lines.size();
-            final HeightMap map = new HeightMap(dimension);
-            for (int z = 0; z < dimension; z++) {
-                final String line = lines.get(z);
-                final String[] split = line.split(DELIMITER);
-                for (int x = 0; x < split.length; x++) {
-                    if (dimension != split.length) {
-                        logger().error("Corrupt file. Dimensions do not fit.");
-                        return;
-                    }
-                    final String elevation = split[x];
-                    map.set(x, z, Float.parseFloat(elevation));
-                }
-            }
-            logger().info("Import finished");
-            session().getEventBus().publish(new ImportFinishedEvent(map));
-        } catch (final IOException | NumberFormatException e) {
-            logger().error("Error while importing File", e);
-            session().getEventBus().publish(new ImportFailedEvent());
-        }
+    public SurfaceMap importTerrain(final File file) throws IOException {
+        final List<String> lines = Files.readAllLines(file.toPath());
+        logger().info("Read " + lines.size() + " lines");
+        final SurfaceMap map = createMap(lines);
+        readTerrain(lines, map);
+        readObstacles(lines, map);
+        return map;
     }
 
-    @Override
-    public void receive(final ImportTerrainEvent event) {
-        importTerrain(event.getFilePath());
+    private SurfaceMap createMap(final List<String> lines) {
+        int zDimension = 0;
+        int xDimension = 0;
+        for (int z = 0; z < lines.size(); z++) {
+            final String line = lines.get(z);
+            zDimension = z;
+            if (SerializationConstants.SECTION_DELIMITER.equals(line)) {
+                break;
+            }
+            final String[] split = line.split(SerializationConstants.VALUE_DELIMITER);
+            if (xDimension <= split.length) {
+                xDimension = split.length;
+            }
+        }
+        final SurfaceMap map = new SurfaceMap(xDimension, zDimension);
+        logger().info("Determined Dimension: " + xDimension + ", " + zDimension);
+        return map;
+    }
+
+    protected void readTerrain(final List<String> lines, final SurfaceMap map) {
+        for (int z = 0; z < map.getZDimension(); z++) {
+            final String line = lines.get(z);
+            if (SerializationConstants.SECTION_DELIMITER.equals(line)) {
+                return;
+            }
+            final String[] split = line.split(SerializationConstants.VALUE_DELIMITER);
+            for (int x = 0; x < map.getXDimension(); x++) {
+                final String elevation = split[x];
+                try {
+                    map.set(x, z, Double.parseDouble(elevation));
+                } catch (final NumberFormatException e) {
+                    map.set(x, z, 0d);
+                }
+            }
+        }
+        return;
+    }
+
+    private void readObstacles(final List<String> lines, final SurfaceMap map) {
+        final int linesToSkip = map.getZDimension() + 2;
+        logger().info("Importing " + (lines.size() - linesToSkip) + " obstacles");
+        for (int i = linesToSkip; i < lines.size(); i++) {
+            final String[] line = lines.get(i).split(SerializationConstants.VALUE_DELIMITER);
+            try {
+                final double x = Double.parseDouble(line[0]);
+                final double y = Double.parseDouble(line[1]);
+                final double z = Double.parseDouble(line[2]);
+                final double r = Double.parseDouble(line[3]);
+                map.addBoulder(new Boulder(x, y, z, r));
+            } catch (final NumberFormatException e) {
+                logger().error("Error while importing obstacle. Skipping this entry", e);
+            }
+        }
+        logger().info("Obstacle import finished");
     }
 }

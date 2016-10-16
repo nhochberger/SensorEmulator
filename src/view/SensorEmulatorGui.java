@@ -13,7 +13,7 @@ import hochberger.utilities.gui.ApplicationGui;
 import hochberger.utilities.gui.WindowClosedApplicationShutdownEventPublisher;
 import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.text.Text;
-import model.HeightMap;
+import model.SurfaceMap;
 import model.Position;
 
 public class SensorEmulatorGui extends SessionBasedObject implements ApplicationGui {
@@ -79,7 +79,7 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
                 public void run() {
                     final DecimalFormat decimalFormatter = new DecimalFormat("##0.00");
                     final StringBuffer buffer = new StringBuffer();
-                    final HeightMap heightMap = event.getHeightMap();
+                    final SurfaceMap heightMap = event.getHeightMap();
                     for (int z = 0; z < heightMap.getZDimension(); z++) {
                         for (int x = 0; x < heightMap.getXDimension(); x++) {
                             buffer.append(decimalFormatter.format(heightMap.get(x, z)));
