@@ -4,16 +4,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.math.VectorUtil;
 import com.jogamp.opengl.util.awt.AWTGLReadBufferUtil;
+import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureCoords;
 import com.jogamp.opengl.util.texture.TextureIO;
@@ -22,10 +23,11 @@ import hochberger.utilities.application.ResourceLoader;
 import hochberger.utilities.threading.ThreadRunner;
 import hochberger.utilities.timing.Sleeper;
 import hochberger.utilities.timing.ToMilis;
+import model.Boulder;
 import model.Position;
 import model.SurfaceMap;
 
-public class OpticalSensorTerrainVisualization implements GLEventListener {
+public class OpticalSensorTerrainVisualization extends TerrainVisualization {
 
     private static final int WAIT_CYCLES = 5;
     private final GLU glu;
@@ -81,21 +83,6 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         }
         this.texture.enable(gl);
         this.texture.bind(gl);
-    }
-
-    @Override
-    public void dispose(final GLAutoDrawable drawable) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void display(final GLAutoDrawable drawable) {
-        update();
-        render(drawable);
-    }
-
-    private void update() {
-        // TODO Auto-generated method stub
     }
 
     private void render(final GLAutoDrawable drawable) {
@@ -162,26 +149,43 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         gl.glPopMatrix();
     }
 
+    @Override
     protected void drawSurface(final GL2 gl) {
-        gl.glBegin(GL2.GL_QUADS);
+        gl.glBegin(GL2.GL_TRIANGLES);
         final TextureCoords coords = this.texture.getImageTexCoords();
         for (int z = 0; z < this.points.getZDimension() - 1; z++) {
             for (int x = 0; x < this.points.getXDimension() - 1; x++) {
-                gl.glNormal3f(this.vertexNormals[x][z][0], this.vertexNormals[x][z][1], this.vertexNormals[x][z][2]);
-                gl.glVertex3d(x, this.points.get(x, z), z);
+
                 gl.glTexCoord2d(coords.bottom(), coords.left());
-                gl.glNormal3f(this.vertexNormals[x][z + 1][0], this.vertexNormals[x][z + 1][1], this.vertexNormals[x][z + 1][2]);
-                gl.glVertex3d(x, this.points.get(x, z + 1), (z + 1));
-                gl.glTexCoord2d(coords.top(), coords.left());
+                gl.glNormal3f(this.vertexNormals[x][z][0], this.vertexNormals[x][z][1], this.vertexNormals[x][z][2]);
+                gl.glVertex3d(this.scalingFactor * x, this.points.get(x, z), this.scalingFactor * z);
+                gl.glTexCoord2d(coords.bottom(), coords.right());
                 gl.glNormal3f(this.vertexNormals[x + 1][z + 1][0], this.vertexNormals[x + 1][z + 1][1], this.vertexNormals[x + 1][z + 1][2]);
-                gl.glVertex3d((x + 1), this.points.get(x + 1, z + 1), (z + 1));
+                gl.glVertex3d(this.scalingFactor * (x + 1), this.points.get(x + 1, z + 1), this.scalingFactor * (z + 1));
                 gl.glTexCoord2d(coords.top(), coords.right());
                 gl.glNormal3f(this.vertexNormals[x + 1][z][0], this.vertexNormals[x + 1][z][1], this.vertexNormals[x + 1][z][2]);
-                gl.glVertex3d((x + 1), this.points.get(x + 1, z), z);
+                gl.glVertex3d(this.scalingFactor * (x + 1), this.points.get(x + 1, z), this.scalingFactor * z);
+
+                gl.glTexCoord2d(coords.bottom(), coords.left());
+                gl.glNormal3f(this.vertexNormals[x][z][0], this.vertexNormals[x][z][1], this.vertexNormals[x][z][2]);
+                gl.glVertex3d(this.scalingFactor * x, this.points.get(x, z), this.scalingFactor * z);
                 gl.glTexCoord2d(coords.bottom(), coords.right());
+                gl.glNormal3f(this.vertexNormals[x][z + 1][0], this.vertexNormals[x][z + 1][1], this.vertexNormals[x][z + 1][2]);
+                gl.glVertex3d(this.scalingFactor * x, this.points.get(x, z + 1), this.scalingFactor * (z + 1));
+                gl.glTexCoord2d(coords.top(), coords.right());
+                gl.glNormal3f(this.vertexNormals[x + 1][z + 1][0], this.vertexNormals[x + 1][z + 1][1], this.vertexNormals[x + 1][z + 1][2]);
+                gl.glVertex3d(this.scalingFactor * (x + 1), this.points.get(x + 1, z + 1), this.scalingFactor * (z + 1));
             }
         }
         gl.glEnd();
+        final GLUT glut = new GLUT();
+        final List<Boulder> boulders = this.points.getBoulders();
+        for (final Boulder boulder : boulders) {
+            gl.glPushMatrix();
+            gl.glTranslated(boulder.getX(), boulder.getY(), boulder.getZ());
+            glut.glutSolidSphere(boulder.getRadius(), 5, 5);
+            gl.glPopMatrix();
+        }
     }
 
     @Override
@@ -243,10 +247,11 @@ public class OpticalSensorTerrainVisualization implements GLEventListener {
         }
     }
 
+    @Override
     public void setPoints(final SurfaceMap points) {
         this.points = new SurfaceMap(0);
         calculateNormals(points);
-        Sleeper.sleep(ToMilis.seconds(0.5));
+        Sleeper.sleep(ToMilis.seconds(1.0));
         this.points = points;
         this.position = new Position(points.getXDimension() / 2d, 1.5 * points.getXDimension(), points.getZDimension() / 2d);
         this.viewTargetPosition = new Position(points.getXDimension() / 2d, 0, points.getZDimension() / 2d);
