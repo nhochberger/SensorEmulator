@@ -85,6 +85,16 @@ public class OpticalSensorTerrainVisualization extends TerrainVisualization {
         this.texture.bind(gl);
     }
 
+    @Override
+    public void display(final GLAutoDrawable drawable) {
+        update();
+        render(drawable);
+    }
+
+    private void update() {
+        // TODO Auto-generated method stub
+    }
+
     private void render(final GLAutoDrawable drawable) {
         final GL2 gl = drawable.getGL().getGL2();
         gl.glClearDepth(1d);
