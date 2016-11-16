@@ -64,7 +64,7 @@ public abstract class Lidar extends SessionBasedObject implements Lifecycle {
 
     public abstract SurfaceMap createTargetHeightMap(final Position position, final Vector3D direction);
 
-    protected abstract int beamRadius();
+    protected abstract int numberOfBeams();
 
     private final class TerrainImportEventHandler implements EventReceiver<ImportFinishedEvent> {
 

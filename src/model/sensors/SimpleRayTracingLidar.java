@@ -13,14 +13,14 @@ public class SimpleRayTracingLidar extends Lidar {
 
     @Override
     public SurfaceMap createTargetHeightMap(final Position position, final Vector3D direction) {
-        final SurfaceMap resultMap = new SurfaceMap(2 * beamRadius() + 1);
+        final SurfaceMap resultMap = new SurfaceMap(2 * numberOfBeams() + 1);
         final int[] target = determineTargetCoordinates(position, direction);
         final int targetX = target[0];
         final int targetZ = target[1];
-        for (int z = 0; z <= 2 * beamRadius() + 1; z++) {
-            for (int x = 0; x <= 2 * beamRadius() + 1; x++) {
-                final int desiredX = targetX - beamRadius() + x;
-                final int desiredZ = targetZ - beamRadius() + z;
+        for (int z = 0; z <= 2 * numberOfBeams() + 1; z++) {
+            for (int x = 0; x <= 2 * numberOfBeams() + 1; x++) {
+                final int desiredX = targetX - numberOfBeams() + x;
+                final int desiredZ = targetZ - numberOfBeams() + z;
                 final double trueElevation = heightMap().get(desiredX, desiredZ);
                 resultMap.set(x, z, trueElevation);
             }
@@ -29,7 +29,7 @@ public class SimpleRayTracingLidar extends Lidar {
     }
 
     @Override
-    protected int beamRadius() {
+    protected int numberOfBeams() {
         return 5;
     }
 }

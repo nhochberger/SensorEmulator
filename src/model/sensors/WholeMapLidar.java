@@ -18,7 +18,7 @@ public class WholeMapLidar extends Lidar {
     }
 
     @Override
-    protected int beamRadius() {
+    protected int numberOfBeams() {
         // not necessary here
         return 0;
     }

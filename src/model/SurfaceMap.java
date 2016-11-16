@@ -27,6 +27,9 @@ public class SurfaceMap {
     }
 
     public double get(final int x, final int z) {
+        if (0 > x || 0 > z || this.xDimension <= x || this.zDimension <= z) {
+            return Double.NaN;
+        }
         return this.points[x][z];
     }
 
@@ -44,5 +47,18 @@ public class SurfaceMap {
 
     public List<Boulder> getBoulders() {
         return this.boulders;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer buffer = new StringBuffer();
+        for (int z = 0; z < getZDimension(); z++) {
+            for (int x = 0; x < getXDimension(); x++) {
+                buffer.append(get(x, z));
+                buffer.append(", ");
+            }
+            buffer.append(System.lineSeparator());
+        }
+        return buffer.toString();
     }
 }
