@@ -8,8 +8,8 @@ import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.application.session.SessionBasedObject;
 import hochberger.utilities.eventbus.EventReceiver;
 import hochberger.utilities.mathematics.Vector3D;
-import model.SurfaceMap;
 import model.Position;
+import model.SurfaceMap;
 
 public abstract class Lidar extends SessionBasedObject implements Lifecycle {
 
@@ -37,29 +37,6 @@ public abstract class Lidar extends SessionBasedObject implements Lifecycle {
 
     protected SurfaceMap heightMap() {
         return this.heightMap;
-    }
-
-    public int[] determineTargetCoordinates(final Position position, final Vector3D direction) {
-        final Vector3D normalizedDirection = direction.normalizedVector();
-        logger().info("Lidar: position: " + position + ", direction: " + direction + "(normalized: " + normalizedDirection + ")");
-        boolean found = false;
-        int x = 0;
-        int z = 0;
-        int i;
-        for (i = 0; !found; i++) {
-            final Vector3D stepVector = normalizedDirection.multiply(i);
-            final Position newPosition = position.addVector(stepVector);
-            x = (int) newPosition.getX();
-            z = (int) newPosition.getZ();
-            found = newPosition.getY() <= this.heightMap.get(x, z);
-            if (i >= 100000) {
-                logger().info("Lidar was unable to gather information. direction of Lidar beams.");
-                break;
-            }
-        }
-        logger().info("Lidar center beam hits surface at [" + x + ", " + z + "]");
-        final int[] result = { x, z };
-        return result;
     }
 
     public abstract SurfaceMap createTargetHeightMap(final Position position, final Vector3D direction);

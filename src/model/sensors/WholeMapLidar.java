@@ -2,8 +2,8 @@ package model.sensors;
 
 import hochberger.utilities.application.session.BasicSession;
 import hochberger.utilities.mathematics.Vector3D;
-import model.SurfaceMap;
 import model.Position;
+import model.SurfaceMap;
 
 public class WholeMapLidar extends Lidar {
 

@@ -1,6 +1,8 @@
 package view;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import controller.events.ImportFinishedEvent;
 import controller.events.LidarResultEvent;
@@ -13,8 +15,8 @@ import hochberger.utilities.gui.ApplicationGui;
 import hochberger.utilities.gui.WindowClosedApplicationShutdownEventPublisher;
 import hochberger.utilities.mathematics.Vector3D;
 import hochberger.utilities.text.Text;
-import model.SurfaceMap;
 import model.Position;
+import model.SurfaceMap;
 
 public class SensorEmulatorGui extends SessionBasedObject implements ApplicationGui {
 
@@ -78,6 +80,7 @@ public class SensorEmulatorGui extends SessionBasedObject implements Application
                 @Override
                 public void run() {
                     final DecimalFormat decimalFormatter = new DecimalFormat("##0.00");
+                    decimalFormatter.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.US));
                     final StringBuffer buffer = new StringBuffer();
                     final SurfaceMap heightMap = event.getHeightMap();
                     for (int z = 0; z < heightMap.getZDimension(); z++) {

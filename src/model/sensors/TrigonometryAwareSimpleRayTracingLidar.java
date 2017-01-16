@@ -13,7 +13,7 @@ public class TrigonometryAwareSimpleRayTracingLidar extends SimpleRayTracingLida
 
     @Override
     protected int numberOfBeams() {
-        return 101;
+        return 3;
     }
 
     private double openingAngle() {
