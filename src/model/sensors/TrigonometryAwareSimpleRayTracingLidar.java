@@ -13,7 +13,7 @@ public class TrigonometryAwareSimpleRayTracingLidar extends SimpleRayTracingLida
 
     @Override
     protected int numberOfBeams() {
-        return 3;
+        return 100;
     }
 
     private double openingAngle() {
@@ -35,7 +35,6 @@ public class TrigonometryAwareSimpleRayTracingLidar extends SimpleRayTracingLida
             }
             currentBeam = cornerBeam.rotateVectorZ(z * singleRayAngleDifference);
         }
-        // System.out.println(map);
         return map;
     }
 }
