@@ -9,7 +9,6 @@ public class WholeMapLidar extends Lidar {
 
     public WholeMapLidar(final BasicSession session) {
         super(session);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
